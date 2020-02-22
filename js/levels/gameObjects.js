@@ -22,6 +22,7 @@ class Character extends PIXIGameObject {
 		if(this.sprite.anchor){
 			this.sprite.anchor.set(0, 1)
 		}
+		this.key = (pos+1).toString()
 		this.pos = pos
 		this.updatePosition()
 	}

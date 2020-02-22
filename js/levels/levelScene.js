@@ -22,12 +22,11 @@ class LevelScene extends Scene {
     })
 
     this.cave = new LevelCave(this.gameScene.characters, null)
-    this.charSelection = new CharacterSelection(this.gameScene.characters, this)
-
     this.stage.addChild(this.cave.stage)
-    this.stage.addChild(this.charSelection.stage)
-    this.gameObjects.push(this.cave)
-    this.gameObjects.push(this.charSelection)
+
+    this.ui = new LevelUI(this.gameScene.characters, this)
+    this.stage.addChild(this.ui.stage)
+    this.UI.push(this.ui)
   }
 
   update(dt) {
@@ -55,25 +54,18 @@ class LevelCave extends GameObject {
   }
 }
 
-class CharacterSelection extends GameObject {
+class LevelUI extends Scene {
   constructor(characters, scene){
-    super()
-    this.stage = new PIXI.Container()
+    super({UI: [], gameObjects: []})
+    this.gameScene = scene
+
     this.stage.width = 480
-    this.stage.height = 40
+    this.stage.height = 320
     this.stage.y = 160
     this.stage.x = 0
 
-    this.characters = characters
-    for(let c in characters){
-      let rectangle = getRectangle(30, 30)
-      rectangle.x = characters[c].sprite.x+9
-      rectangle.y = 5
-      this.stage.addChild(rectangle)
-    }
+    this.charSelection = new CharacterSelection(characters, this)
+    this.gameObjects.push(this.charSelection)
+    this.stage.addChild(this.charSelection.stage)
   }
-}
-
-class LevelUI extends PIXIGameObject {
-  
 }

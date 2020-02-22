@@ -40,7 +40,7 @@ class Game {
     this.setUpCanvas(options)
     this.loadSprites(options)
       // set up the keyboard listener
-    this.canvas.addEventListener('keyup', this.processEvt.bind(this))
+    document.addEventListener('keyup', this.processEvt.bind(this))
     this.canvas.addEventListener('mousedown', this.processClickEvt.bind(this))
     this.canvas.addEventListener('touchstart', this.processTouchEvt.bind(this))
   }
