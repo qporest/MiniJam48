@@ -24,7 +24,7 @@ class GameScene extends Scene {
     // Adding map
     //this.scriptSystem = new ScriptSystem(this)
     this.setupStage(app)
-    this.initGameLogic()
+    this.initGameLogic(app)
 
     this.sceneTracker = new SceneTracker(this, app, this.script)
     this.currentSong = null
@@ -32,13 +32,13 @@ class GameScene extends Scene {
     this.sceneTracker.setScene()
   }
 
-  initGameLogic(){
+  initGameLogic(app){
     this.characters = {
-      "Necromancer": new Character(getRectangle(40, 70), 0),
-      "Dog": new Character(getRectangle(40, 70), 1),
-      "Elf": new Character(getRectangle(40, 70), 2),
-      "Clerik": new Character(getRectangle(40, 70), 3),
-      "Human": new Character(getRectangle(40, 70), 4)
+      "Necromancer": new Character(getRectangle(48, 80), 0),
+      "Dog": new Character(app.sprites["fox"], 1),
+      "Elf": new Character(getRectangle(48, 80), 2),
+      "Clerik": new Character(getRectangle(48, 80), 3),
+      "Human": new Character(getRectangle(48, 80), 4)
     }
   }
 

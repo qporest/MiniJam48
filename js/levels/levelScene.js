@@ -20,19 +20,17 @@ class LevelScene extends Scene {
       wordWrap: true,
       wordWrapWidth: 400
     })
-    this.textObject = new PIXI.Text("Loading?", textStyle)
-    this.textObject.x = this.WIDTH/2 - this.textObject.width/2
-    this.textObject.y = this.HEIGHT/2 - this.textObject.height/2
 
     this.cave = new LevelCave(this.gameScene.characters, null)
-    this.stage.addChild(this.textObject)
+    this.charSelection = new CharacterSelection(this.gameScene.characters, this)
 
     this.stage.addChild(this.cave.stage)
+    this.stage.addChild(this.charSelection.stage)
     this.gameObjects.push(this.cave)
+    this.gameObjects.push(this.charSelection)
   }
 
   update(dt) {
-    this.textObject.text += ""
   }
 
   render() {
@@ -53,6 +51,25 @@ class LevelCave extends GameObject {
     for(let c in characters){
       this.stage.addChild(characters[c].sprite)
       console.log(characters[c].sprite)
+    }
+  }
+}
+
+class CharacterSelection extends GameObject {
+  constructor(characters, scene){
+    super()
+    this.stage = new PIXI.Container()
+    this.stage.width = 480
+    this.stage.height = 40
+    this.stage.y = 160
+    this.stage.x = 0
+
+    this.characters = characters
+    for(let c in characters){
+      let rectangle = getRectangle(30, 30)
+      rectangle.x = characters[c].sprite.x+9
+      rectangle.y = 5
+      this.stage.addChild(rectangle)
     }
   }
 }

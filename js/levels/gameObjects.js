@@ -19,13 +19,19 @@ class Character extends PIXIGameObject {
 
 	constructor(sprite, pos){
 		super(sprite)
-		// this.sprite.achor.set(0, 1)
+		if(this.sprite.anchor){
+			this.sprite.anchor.set(0, 1)
+		}
 		this.pos = pos
 		this.updatePosition()
 	}
 
+	getCoordinates(pos){
+		return {y:120, x: this.pos*(this.CHAR_MARGIN+this.CHAR_WIDTH) + this.LEFT_MARGIN}
+	}
+
 	updatePosition(){
-		this.coordinates = {y:120, x: this.pos*(this.CHAR_MARGIN+this.CHAR_WIDTH) + this.LEFT_MARGIN}
+		this.coordinates = this.getCoordinates(this.pos)
 		console.log("Coordinates: "+this.coordinates.x+" "+this.coordinates.y)
 		this.sprite.x = this.coordinates.x
 		this.sprite.y = this.coordinates.y
