@@ -33,19 +33,3 @@ class CharacterSelection extends Scene {
   }
 }
 
-/*
-Keyboard and Sprite button reacts to both a press on a certain key and
-on a touch with the same callback.
-*/
-class KeyAndSpriteButton extends SpriteButton {
-	constructor(sprite, callback, key){
-		super(sprite, callback)
-		this.key = key
-	}
-
-	processNonTouchEvent(evt){
-    	if(evt.key == this.key){
-    		this.callback()
-    	}
-  	}
-}

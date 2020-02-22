@@ -67,5 +67,8 @@ class LevelUI extends Scene {
     this.charSelection = new CharacterSelection(characters, this)
     this.gameObjects.push(this.charSelection)
     this.stage.addChild(this.charSelection.stage)
+
+    this.charInfo = new CharacterInfo(characters, this, "Necromancer")
+    this.stage.addChild(this.charInfo.stage)
   }
 }

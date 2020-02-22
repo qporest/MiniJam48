@@ -12,13 +12,32 @@ function getRectangle(width, height) {
 	return graphics
 }
 
-class Character extends PIXIGameObject {
+/*
+Keyboard and Sprite button reacts to both a press on a certain key and
+on a touch with the same callback.
+*/
+class KeyAndSpriteButton extends SpriteButton {
+	constructor(sprite, callback, key){
+		super(sprite, callback)
+		this.key = key
+	}
+
+	processNonTouchEvent(evt){
+    	if(evt.key == this.key){
+    		this.callback()
+    	}
+  	}
+}
+
+class Character extends GameObject {
 	LEFT_MARGIN=20
 	CHAR_MARGIN=10
 	CHAR_WIDTH =48
 
-	constructor(sprite, pos){
-		super(sprite)
+	constructor(name, sprite, pos){
+		super()
+		this.sprite = sprite
+		this.name = name
 		if(this.sprite.anchor){
 			this.sprite.anchor.set(0, 1)
 		}
@@ -42,13 +61,5 @@ class Character extends PIXIGameObject {
 
 	sortZIndex(){
 		game.currentScene.stage.children.sort((itemA, itemB) => itemA.zIndex - itemB.zIndex)
-	}
-
-	processTouchEvent(evt, coord){
-
-	}
-
-	processNonTouchEvent(evt){
-		
 	}
 }
