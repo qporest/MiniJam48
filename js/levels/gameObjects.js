@@ -13,9 +13,9 @@ function getRectangle(width, height) {
 }
 
 class Character extends PIXIGameObject {
-	LEFT_MARGIN=40
-	CHAR_MARGIN=20
-	CHAR_WIDTH =40
+	LEFT_MARGIN=20
+	CHAR_MARGIN=10
+	CHAR_WIDTH =48
 
 	constructor(sprite, pos){
 		super(sprite)
