@@ -1,4 +1,4 @@
-let game = new VaderGame({
+let game = new EscapeGame({
 	debug: true,
 	sprites: [
 		"./img/Jessica.png",

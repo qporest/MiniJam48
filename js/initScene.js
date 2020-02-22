@@ -12,7 +12,7 @@ class InitScene extends Scene {
     this.stage.x = app.canvas.width/2 - this.WIDTH/2
     this.stage.y = app.canvas.height/2 - this.HEIGHT/2
     let textStyle = new PIXI.TextStyle({
-      fontFamily: "Helvetica",
+      fontFamily: "arcade",
       fontSize: 36,
       fill: "#DDDCD6",
       stroke: "black",

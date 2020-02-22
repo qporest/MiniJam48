@@ -46,13 +46,7 @@ class Game {
   }
 
   loadSprites(options){
-    if(this.currentScene !== null && "textObject" in this.currentScene){
-      this.currentScene.textObject.text = "Loading Images"
-    }
-    PIXI.loader
-      .add(options["sprites"])
-      .add("./img/animations/VaderAnimation.json")
-      .load(this.spritesLoaded.bind(this))
+    this.spritesLoaded(options)
   }
 
   /**
@@ -81,40 +75,11 @@ class Game {
   /* Gets overridden. Called after the sprites are loaded.
   */
   spritesLoaded(){
-    if(this.currentScene !== null && "textObject" in this.currentScene){
-      this.currentScene.textObject.text = "Loading Font"
-    }
-    console.log("Sprites loaded.")
-    for(let sprite_path of this.options["sprites"]){
-      console.log("Adding :"+this.options["sprite_mapping"][sprite_path])
-      this.sprites[this.options["sprite_mapping"][sprite_path]] =
-        new PIXI.Sprite(PIXI.loader.resources[sprite_path].texture) 
-    }
-    for(let animation in PIXI.loader.resources["./img/animations/VaderAnimation.json"].spritesheet.animations){
-      this.sprites[animation] = new PIXI.extras.AnimatedSprite(
-        PIXI.loader.resources["./img/animations/VaderAnimation.json"].spritesheet.animations[animation]
-      )
-    }
-    
-    // this.sprites[] = new PIXI.extras.AnimatedSprite(
-    // )
-    
-    let font = new FontFaceObserver('arcade', {
-    })
-
-    font.load().then(this.loadMusic.bind(this))
+    this.loadMusic()
   }
 
   loadMusic(){
-    if(this.currentScene !== null && "textObject" in this.currentScene){
-      this.currentScene.textObject.text = "Loading Music"
-    }
-    sounds.load([
-      "music/01_IntroSong.mp3", 
-      "music/02_Mystery Song.mp3",
-      "music/03_OWO Song.mp3"
-    ])
-    sounds.whenLoaded = this.resourcesLoaded.bind(this)
+    this.resourcesLoaded()
   }
 
   resourcesLoaded(){
@@ -141,7 +106,6 @@ class Game {
     scene.stage.visible = true
     this.stage.addChild(scene.stage)
     this.currentScene = this.scene[this.scene.length - 1]
-    console.log("Changed current scene")
   }
 
   popScene(){
@@ -261,6 +225,8 @@ class Scene {
   }
 
   init(app) {
+    this.stage.width = app.canvas.width
+    this.stage.height = app.canvas.height
     console.log("Initializing scene")
   }
 }
