@@ -14,13 +14,33 @@ class LevelScene extends Scene {
   }
 
   postCheck(){
-    this.gameScene.sceneTracker.nextScene()
+    return true
+  }
+
+  finish(character){
+    delete this.characters[character.name]
+    if(this.postCheck()){
+      this.gameScene.sceneTracker.nextScene()
+      let dialogue = new DialogueScene()
+      dialogue.init(this.app)
+      this.app.pushScene(dialogue)
+      dialogue.setDialogue({
+        text: "well done"
+      })
+    } else {
+      let dialogue = new DialogueScene()
+      dialogue.init(this.app)
+      this.app.pushScene(dialogue)
+      dialogue.setDialogue({
+        text: "test"
+      })
+    }
   }
 
   init(app, preCheck, postCheck){
     this.preCheck = preCheck || this.preCheck
     this.postCheck = postCheck || this.postCheck
-    
+
     this.HEIGHT = 480
     this.WIDTH = 480
     let textStyle = new PIXI.TextStyle({
@@ -34,13 +54,19 @@ class LevelScene extends Scene {
     })
 
     this.app = app
+    this.characters = this.gameScene.characters
 
-    this.cave = new LevelCave(this.gameScene.characters, app.sprites["cave_ceiling"], app.sprites["floor"], app.sprites["background"])
+    this.cave = new LevelCave(this.characters, app.sprites["cave_ceiling"], app.sprites["floor"], app.sprites["background"])
     this.stage.addChild(this.cave.stage)
 
-    this.ui = new LevelUI(this.gameScene.characters, this, app)
+    this.ui = new LevelUI(this.characters, this, app)
     this.stage.addChild(this.ui.stage)
     this.UI.push(this.ui)
+
+    /* Some wrong decision was made before, dispay the losing screen */
+    if(!this.preCheck){
+
+    }
   }
 
   update(dt) {
@@ -106,7 +132,7 @@ class LevelUI extends Scene {
     this.stage.addChild(this.charSelection.stage)
 
     this.characterAction = new CharacterAction(this)
-    this.characterInfo = new CharacterInfo(characters, this, "Necromancer")
+    this.characterInfo = new CharacterInfo(characters, this, Object.keys(characters)[0])
     
     this.obstacleInfo = new ObstacleInfo("this is the first one in a series of a long series of texts. Gotta put all this knowledge and information here, otherwiseitsdsfjsdjhflk;sjdfjldsfjl")
 
@@ -153,7 +179,7 @@ class LevelUI extends Scene {
     } else {
       alert("Something fishy is going on. Error code: 0")
     }
-    this.parentScene.postCheck(current)
+    this.parentScene.finish(current)
   }
 
   changeDisplay(key){

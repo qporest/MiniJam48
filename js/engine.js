@@ -112,6 +112,7 @@ class Game {
     console.log("Scene popped")
     let latest = this.scene.pop()
     this.stage.removeChild(latest.stage)
+    this.eventBuffer.length = 0
     latest.stage.visible = false
     this.currentScene = this.scene[this.scene.length - 1]
     return latest

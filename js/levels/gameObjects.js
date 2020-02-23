@@ -95,7 +95,7 @@ class Character extends GameObject {
 	CHAR_MARGIN=10
 	CHAR_WIDTH =48
 
-	constructor(name, role, sprite, pos){
+	constructor(name, role, sprite, pos, params={}){
 		super()
 		this.sprite = sprite
 		this.role = role
@@ -107,6 +107,16 @@ class Character extends GameObject {
 		}
 		this.key = 49+pos
 		this.pos = pos
+
+		this.params = {}
+		
+		this.params.thumbs     = params.thumbs     || true
+		this.params.necromancy = params.necromancy || false
+		this.params.strength   = params.strength   || false
+		this.params.dwarf      = params.dwarf      || false
+		this.params.antidote   = params.antidote   || false
+		this.params.skinny     = params.skinny     || false
+
 		this.updatePosition()
 	}
 
