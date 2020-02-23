@@ -101,7 +101,6 @@ class LevelUI extends Scene {
       case 52:
       case 53: 
       case 79:
-        console.log("sending an event")
         /* one of the characters or obstacle were clicked */
         this.app.eventBuffer.push({type: "switchInfo", key: key})
       break;

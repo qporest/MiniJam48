@@ -124,5 +124,17 @@ class CharacterInfo extends GameObject {
 
     this.stage.addChild(this.dialogContainer)
   }
+
+  processEvt(evt){
+    if(evt.type=="switchInfo"){
+      console.log("processing event in info")
+      if(evt.key<54){
+        let char = Object.values(this.characters).filter(x => x.pos==evt.key-49)[0]
+        if(char){
+          this.displayCharacter(char)
+        }
+      }
+    }
+  }
 }
 
