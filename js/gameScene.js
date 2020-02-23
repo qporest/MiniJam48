@@ -21,7 +21,6 @@ class GameScene extends Scene {
   init(app){
     super.init(app)
     this.app = app
-    // Adding map
     //this.scriptSystem = new ScriptSystem(this)
     this.setupStage(app)
     this.initGameLogic(app)

@@ -21,7 +21,7 @@ class LevelScene extends Scene {
       wordWrapWidth: 400
     })
 
-    this.cave = new LevelCave(this.gameScene.characters, app.sprites["cave_ceiling"], app.sprites["floor"])
+    this.cave = new LevelCave(this.gameScene.characters, app.sprites["cave_ceiling"], app.sprites["floor"], app.sprites["background"])
     this.stage.addChild(this.cave.stage)
 
     this.ui = new LevelUI(this.gameScene.characters, this, app)
@@ -39,15 +39,17 @@ class LevelScene extends Scene {
 
 
 class LevelCave extends GameObject {
-  constructor(characters, foreground, background){
+  constructor(characters, foreground, floor, background){
     super()
     this.stage = new PIXI.Container()
     this.stage.width = 480
     this.stage.height = 160
-
     this.characters = characters
-    
-    console.log(this.stage.y)
+    if(background){
+      background.x = 0
+      background.y = 0
+      this.stage.addChild(background)
+    }
     for(let c in characters){
       this.stage.addChild(characters[c].sprite)
       console.log(characters[c].sprite)
@@ -56,10 +58,10 @@ class LevelCave extends GameObject {
       foreground.x = -Math.floor(Math.random()*480)
       this.stage.addChild(foreground)
     }
-    if(background){
-      background.x = 0
-      background.y = 160
-      this.stage.addChild(background)
+    if(floor){
+      floor.x = 0
+      floor.y = 160
+      this.stage.addChild(floor)
     }
   }
 }
