@@ -276,7 +276,7 @@ class SceneTracker {
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role:"Race:human  class:cleric",
-          pos: 3
+          pos: 2
         },
         "0": {
           thinking: "",
@@ -315,7 +315,7 @@ class SceneTracker {
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role:"Race:dwarf  class:warrior",
-          pos: 2,
+          pos: 3,
         },
         "0": {
           thinking: "An opportunity for sacrifice? This early on? It's not a battle death, but a worthy sacrifice is still a ticket to Valhalla.",
