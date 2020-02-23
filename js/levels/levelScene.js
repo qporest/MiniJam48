@@ -53,6 +53,7 @@ class LevelCave extends GameObject {
       console.log(characters[c].sprite)
     }
     if(foreground){
+      foreground.x = -Math.floor(Math.random()*480)
       this.stage.addChild(foreground)
     }
     if(background){
