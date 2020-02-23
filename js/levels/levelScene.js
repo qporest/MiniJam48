@@ -2,10 +2,8 @@ class LevelScene extends Scene {
   constructor(gameScene, obj = {
     UI: [],
     gameObjects: []
-  }, preCheck, postCheck) {
+  }) {
     super(obj)
-    this.preCheck = preCheck || this.preCheck
-    this.postCheck = postCheck || this.postCheck
     this.gameScene = gameScene
     this.cave = null
     this.app = null
@@ -19,7 +17,10 @@ class LevelScene extends Scene {
     this.gameScene.sceneTracker.nextScene()
   }
 
-  init(app){
+  init(app, preCheck, postCheck){
+    this.preCheck = preCheck || this.preCheck
+    this.postCheck = postCheck || this.postCheck
+    
     this.HEIGHT = 480
     this.WIDTH = 480
     let textStyle = new PIXI.TextStyle({

@@ -6,16 +6,7 @@ class GameScene extends Scene {
     super(obj)
     /* layers are for interaction with static layered objects */
     this.layers = []
-    this.script = {
-      0: {
-        scene: new LevelScene(this),
-        next: 1
-      },
-      1: {
-        scene: new LevelScene(this),
-        next: "final"
-      }
-    }
+    this.script = null
   }
 
   init(app){
@@ -25,7 +16,8 @@ class GameScene extends Scene {
     this.setupStage(app)
     this.initGameLogic(app)
 
-    this.sceneTracker = new SceneTracker(this, app, this.script)
+    this.sceneTracker = new SceneTracker(this, app)
+    this.script = this.sceneTracker.script
     this.currentSong = null
 
     this.sceneTracker.setScene()
@@ -33,12 +25,36 @@ class GameScene extends Scene {
 
   initGameLogic(app){
     this.characters = {
-      "Necromancer": new Character("Petya the necromancer", 
-                                        "Race:ogre   class:necromancer", getRectangle(48, 80), 0),
-      "Fox": new Character("Fox",       "Race:fox    class:k9", app.sprites["fox"], 1),
-      "Elf": new Character("Elf",       "Race:elf    class:royalty", getRectangle(48, 80), 2),
-      "Clerik": new Character("Clerik", "Race:human  class:cleric", app.sprites["cleric"], 3),
-      "Dwarf": new Character("Dwarf",   "Race:dward  class:warrior", getRectangle(48, 60), 4)
+      "Necromancer": new Character(
+        "Petya the necromancer",
+        "Race:ogre   class:necromancer", 
+        getRectangle(48, 80), 
+        0
+      ),
+      "Fox": new Character(
+        "Fox",
+        "Race:fox    class:k9",
+        app.sprites["fox"], 
+        4
+      ),
+      "Elf": new Character(
+        "Elf",
+        "Race:elf    class:royalty",
+        getRectangle(48, 80), 
+        2
+      ),
+      "Clerik": new Character(
+        "Clerik", 
+        "Race:human  class:cleric", 
+        app.sprites["cleric"], 
+        3
+      ),
+      "Dwarf": new Character(
+        "Dwarf",   
+        "Race:dward  class:warrior", 
+        getRectangle(48, 60), 
+        1
+      )
     }
   }
 
@@ -87,16 +103,28 @@ class GameScene extends Scene {
 
 }
 
+
 class SceneTracker {
-  constructor(scene, app, script){
-    this.parent_scene = scene
-    this.script = script
+  constructor(scene, app){
+    this.gameScene = scene
     this.app = app
     this.currentScene = 0
+    this.script = {
+      0: {
+        scene: new LevelScene(this.gameScene),
+        preCheck: null,
+        postCheck: null,
+        next: 1
+      },
+      1: {
+        scene: new LevelScene(this.gameScene),
+        next: "final"
+      }
+    }
   }
 
   setScene(){
-    this.script[this.currentScene]["scene"].init(this.app)
+    this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
     this.app.pushScene(this.script[this.currentScene]["scene"])
   }
 
@@ -104,7 +132,7 @@ class SceneTracker {
     this.app.popScene()
     let next = this.script[this.currentScene]["next"]
     if (next == "final"){
-      this.parent_scene.gameFinished()
+      this.gameScene.gameFinished()
     } else {
       this.currentScene = next
       this.setScene()
