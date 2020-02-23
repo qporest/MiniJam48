@@ -2,10 +2,21 @@ class LevelScene extends Scene {
   constructor(gameScene, obj = {
     UI: [],
     gameObjects: []
-  }) {
+  }, preCheck, postCheck) {
     super(obj)
+    this.preCheck = preCheck || this.preCheck
+    this.postCheck = postCheck || this.postCheck
     this.gameScene = gameScene
     this.cave = null
+    this.app = null
+  }
+
+  preCheck(){
+    return true
+  }
+
+  postCheck(){
+    this.gameScene.sceneTracker.nextScene()
   }
 
   init(app){
@@ -21,6 +32,8 @@ class LevelScene extends Scene {
       wordWrapWidth: 400
     })
 
+    this.app = app
+
     this.cave = new LevelCave(this.gameScene.characters, app.sprites["cave_ceiling"], app.sprites["floor"], app.sprites["background"])
     this.stage.addChild(this.cave.stage)
 
@@ -32,8 +45,18 @@ class LevelScene extends Scene {
   update(dt) {
   }
 
-  render() {
-    // console.log("I was rendered")
+  changeDisplay(key){
+    switch(key){
+      case 49:
+      case 50:
+      case 51:
+      case 52:
+      case 53: 
+      case 79:
+        /* one of the characters or obstacle were clicked */
+        this.app.eventBuffer.push({type: "switchInfo", key: key})
+      break;
+    }
   }
 }
 
@@ -69,7 +92,7 @@ class LevelCave extends GameObject {
 class LevelUI extends Scene {
   constructor(characters, scene, app){
     super({UI: [], gameObjects: []})
-    this.gameScene = scene
+    this.parentScene = scene
     this.app = app
 
     this.stage.width = 480
@@ -129,20 +152,11 @@ class LevelUI extends Scene {
     } else {
       alert("Something fishy is going on. Error code: 0")
     }
+    this.parentScene.postCheck(current)
   }
 
   changeDisplay(key){
-    switch(key){
-      case 49:
-      case 50:
-      case 51:
-      case 52:
-      case 53: 
-      case 79:
-        /* one of the characters or obstacle were clicked */
-        this.app.eventBuffer.push({type: "switchInfo", key: key})
-      break;
-    }
+    this.parentScene.changeDisplay(key)
   }
 
   processEvt(evt){
