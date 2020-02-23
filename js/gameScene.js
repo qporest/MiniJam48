@@ -52,7 +52,7 @@ class GameScene extends Scene {
       "Dwarf": new Character(
         "Dwarf",
         this.sceneTracker,  
-        getRectangle(48, 80), 
+        app.sprites["dwarf"],
         {
           dwarf: true
         }
