@@ -193,7 +193,8 @@ class SceneTracker {
       "5": {
         // big boulder
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["5"]["description"]
+            text: this.db["obstacles"]["5"]["description"],
+            sprite: this.app.sprites["boulder"]
           }, 
           this.db["obstacles"]["5"]["preCheckFailure"],
           false
@@ -252,6 +253,16 @@ class SceneTracker {
     this.app.eventBuffer.push({
       type: "nextScene"
     })
+    this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
+    this.app.pushScene(this.script[this.currentScene]["scene"])
+  }
+
+  setSceneN(num){
+    this.app.eventBuffer.push({
+      type: "nextScene"
+    })
+    this.app.popScene()
+    this.currentScene = num
     this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
     this.app.pushScene(this.script[this.currentScene]["scene"])
   }
