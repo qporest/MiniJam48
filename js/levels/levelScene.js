@@ -21,7 +21,7 @@ class LevelScene extends Scene {
       wordWrapWidth: 400
     })
 
-    this.cave = new LevelCave(this.gameScene.characters, null)
+    this.cave = new LevelCave(this.gameScene.characters, app.sprites["cave_ceiling"])
     this.stage.addChild(this.cave.stage)
 
     this.ui = new LevelUI(this.gameScene.characters, this)
@@ -46,6 +46,9 @@ class LevelCave extends GameObject {
     this.stage.height = 160
 
     this.characters = characters
+    if(background){
+      this.stage.addChild(background)
+    }
     console.log(this.stage.y)
     for(let c in characters){
       this.stage.addChild(characters[c].sprite)
