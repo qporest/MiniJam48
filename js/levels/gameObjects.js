@@ -95,18 +95,26 @@ class Character extends GameObject {
 	CHAR_MARGIN=10
 	CHAR_WIDTH =48
 
-	constructor(name, role, sprite, pos, params={}){
+	constructor(name, script, sprite, params={}){
 		super()
 		this.sprite = sprite
-		this.role = role
+		this.script = script
+
 		this.name = name
+
+		let charData = this.script.getCharacterInfo(name)
+		this.pos = charData.pos
+		this.role = charData.role
+		this.bio = charData.bio
+
+		this.dialog = this.script.getCharacterDialog(name)
+
 		if(this.sprite.anchor){
 			this.sprite.anchor.set(0, 1)
 		} else {
 			this.sprite.pivot.set(0, this.sprite.height)
 		}
-		this.key = 49+pos
-		this.pos = pos
+		this.key = 49+this.pos
 
 		this.params = {}
 		
@@ -124,6 +132,10 @@ class Character extends GameObject {
 		return {y:160, x: this.pos*(this.CHAR_MARGIN+this.CHAR_WIDTH) + this.LEFT_MARGIN}
 	}
 
+	updateDialog(){
+		this.dialog = this.script.getCharacterDialog(this.name)
+	}
+
 	updatePosition(){
 		this.coordinates = this.getCoordinates(this.pos)
 		console.log("Coordinates: "+this.coordinates.x+" "+this.coordinates.y)
@@ -135,5 +147,11 @@ class Character extends GameObject {
 
 	sortZIndex(){
 		game.currentScene.stage.children.sort((itemA, itemB) => itemA.zIndex - itemB.zIndex)
+	}
+
+	processEvt(evt){
+		if(evt.type == "nextScene"){
+			this.dialog = this.script.getCharacterDialog(name)
+		}
 	}
 }

@@ -13,12 +13,13 @@ class GameScene extends Scene {
     super.init(app)
     this.app = app
     //this.scriptSystem = new ScriptSystem(this)
-    this.setupStage(app)
-    this.initGameLogic(app)
 
     this.sceneTracker = new SceneTracker(this, app)
     this.script = this.sceneTracker.script
     this.currentSong = null
+
+    this.setupStage(app)
+    this.initGameLogic(app)
 
     this.sceneTracker.setScene()
   }
@@ -27,36 +28,31 @@ class GameScene extends Scene {
     this.characters = {
       "Necromancer": new Character(
         "Necromancer",
-        "Race:ogre   class:necromancer", 
+        this.sceneTracker,
         getRectangle(48, 80), 
-        0,
         {
           necromancy: true
         }
       ),
       "Fox": new Character(
         "Fox",
-        "Race:fox    class:k9",
+        this.sceneTracker,
         app.sprites["fox"], 
-        4
       ),
       "Elf": new Character(
         "Elf",
-        "Race:elf    class:royalty",
-        getRectangle(48, 80), 
-        2
+        this.sceneTracker,
+        app.sprites["elf"], 
       ),
       "Cleric": new Character(
         "Cleric", 
-        "Race:human  class:cleric", 
+        this.sceneTracker,
         app.sprites["cleric"], 
-        3
       ),
       "Dwarf": new Character(
-        "Dwarf",   
-        "Race:dwarf  class:warrior", 
+        "Dwarf",
+        this.sceneTracker,  
         getRectangle(48, 60), 
-        1,
         {
           dwarf: true
         }
@@ -88,19 +84,7 @@ class GameScene extends Scene {
   }
 
   processEvt(evt) {
-    if(evt.type=="touch"){
-      let processed = false
-      for(let layer of this.layers){
-        let in_layer = false 
-        for(let obj of layer){
-          in_layer = obj.processEvt(evt)
-          if(in_layer){processed = true}
-        }
-        if(processed){ break }
-      }
-    } else {
-      super.processEvt(evt)
-    }
+    super.processEvt(evt)
   }
 
   gameFinished(){
@@ -117,7 +101,7 @@ class SceneTracker {
     this.currentScene = 0
     this.initDB()
     this.script = {
-      0: {
+      "0": {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["0"]["description"]
           }, 
@@ -125,17 +109,17 @@ class SceneTracker {
         ),
         next: 1
       },
-      1: {
+      "1": {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["1"]["description"]
           }, 
           this.db["obstacles"]["1"]["preCheckFailure"],
           false
         ),
-        postCheck: (char, chars)=>Object.values(chars).filter(x=>x.params.necromancy).length > 0,
+        postCheck: (char, chars)=>char.params.necromancy,
         next: 2
       },
-      2: {
+      "2": {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["2"]["description"]
           }, 
@@ -145,12 +129,11 @@ class SceneTracker {
         preCheck: function(chars){
           if(Object.values(chars).filter(x=>x.params.dwarf).length == 0){
             console.log("Dwarf text event")
-            app.eventBuffer.push({
-              type: "showLevelDialog",
-              text: "Unfortunately without dwarf our chances are 1 in 3",
-              persistent: true
-            })
-            console.log(app.eventBuffer[app.eventBuffer.length-1])
+            this.ui.obstacleInfo.displayInfo(this.ui.obstacleInfo.text + "\n"+
+            "Unfortunately without dwarf our chances are 1 in 3 to pick the right door that's not a trap.")
+          } else {
+            this.ui.obstacleInfo.displayInfo(this.ui.obstacleInfo.text + "\n"+
+            "Fortunately dwarf remembers his native language, maybe we should let him take a lead on this.")
           }
           return true
         },
@@ -169,9 +152,23 @@ class SceneTracker {
     }
   }
 
+  getCharacterDialog(char){
+    return this.db[char][this.currentScene].thinking
+  }
+  getCharacterInfo(char){
+    return this.db[char]["info"]
+  }
+
   setScene(){
+    this.app.eventBuffer.push({
+      type: "nextScene"
+    })
     this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
     this.app.pushScene(this.script[this.currentScene]["scene"])
+  }
+
+  gameOver(){
+    this.app.popScene()
   }
 
   nextScene(){
@@ -189,6 +186,11 @@ class SceneTracker {
 
     this.db = {
       "Necromancer": {
+        "info":{
+          bio: "This is a test fake bio. As fake as it gets tbh",
+          role: "Race:ogre   class:necromancer",
+          pos: 0
+        },
         "0": {
           thinking: "",
           sacrifice: ""
@@ -223,6 +225,11 @@ class SceneTracker {
         }
       },
       "Fox": {
+        "info":{
+          bio: "This is a test fake bio. As fake as it gets tbh",
+          role:"Race:fox    class:k9",
+          pos: 4
+        },
         "0": {
           thinking: "",
           sacrifice: ""
@@ -257,6 +264,11 @@ class SceneTracker {
         }
       },
       "Cleric": {
+        "info":{
+          bio: "This is a test fake bio. As fake as it gets tbh",
+          role:"Race:human  class:cleric",
+          pos: 3
+        },
         "0": {
           thinking: "",
           sacrifice: ""
@@ -291,9 +303,14 @@ class SceneTracker {
         }
       },
       "Dwarf": {
+        "info":{
+          bio: "This is a test fake bio. As fake as it gets tbh",
+          role:"Race:dwarf  class:warrior",
+          pos: 2,
+        },
         "0": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "An opportunity for sacrifice? This early on? It's not a battle death, but a worthy sacrifice is still a ticket to Valhalla.",
+          sacrifice: "I hope you get to live. Mostly so that you get to tell the tale of my brave sacrifice! Also, please check that my lights are off at home. For the planet."
         },
         "1": {
           thinking: "",
@@ -325,12 +342,17 @@ class SceneTracker {
         }
       },
       "Elf": {
+        "info":{
+          bio: "This is a test fake bio. As fake as it gets tbh",
+          role:"Race:elf    class:royalty",
+          pos: 1
+        },
         "0": {
-          thinking: "",
+          thinking: "That level looks rusty. Royalty never shall touch rusty objects, but I can't lose face either, so whatever needs to be done.",
           sacrifice: ""
         },
         "1": {
-          thinking: "",
+          thinking: "All these skeletons make me think that maybe underneath our bodies we are all the same. Except the dwarves of course.",
           sacrifice: ""
         },
         "2": {
@@ -360,11 +382,13 @@ class SceneTracker {
       },
       "obstacles": {
         "0": {
-          description: "",
+          description: "It's clear from the beginning - not everyone will make it out alive.\n" +
+          "You see a metal gate and a lever that opens it. It looks like someone might need to keep it open so others can pass.",
           preCheckFailure: ""
         },
         "1": {
-          description: "",
+          description: `There's an insciption on the wall. It says "To pass without harm one must say the magical word - ", and then it stops.
+          There's a skeleton below the insciption, still holding his masonry tools - bounded to forever work on the writing and never finish it.`,
           preCheckFailure: ""
         },
         "2": {

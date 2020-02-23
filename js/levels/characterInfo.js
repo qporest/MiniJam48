@@ -57,6 +57,7 @@ class CharacterInfo extends GameObject {
   }
 
   displayCharacter(character){
+    character.updateDialog()
     this.displayCharacterDialog(character)
     this.displayCharacterBio(character)
   }
@@ -82,7 +83,7 @@ class CharacterInfo extends GameObject {
     role.y = 20
     this.bioContainer.addChild(role)
 
-    let bio = new PIXI.Text("Lorum ipsum dolor sit amet. conquistadors are fighting the bulls underwater", this.h1long)
+    let bio = new PIXI.Text(character.bio, this.h1long)
     bio.x = 20
     bio.y = 50
     this.bioContainer.addChild(bio)
@@ -118,7 +119,7 @@ class CharacterInfo extends GameObject {
     this.dialogContainer.addChild(name)
 
 
-    let dialog = new PIXI.Text("Lorum ipsum dolor sit amet. conquistadors are fighting the bulls underwater", this.h1)
+    let dialog = new PIXI.Text(character.dialog, this.h1)
     dialog.x = 120
     dialog.y = 20
     this.dialogContainer.addChild(dialog)
@@ -128,11 +129,9 @@ class CharacterInfo extends GameObject {
 
   processEvt(evt){
     if(evt.type=="switchInfo" || evt.type=="refreshInfo"){
-      console.log("processing event in info")
       if(evt.key>=49 && evt.key<54){
         let char = Object.values(this.characters).filter(x => x.pos==evt.key-49)[0]
-        console.log("Failing char")
-        console.log(char)
+
         if(char){
           this.displayCharacter(char)
         }

@@ -64,7 +64,8 @@ class LevelScene extends Scene {
 
     /* Some wrong decision was made before, dispay the losing screen */
     if(!this.preCheck.bind(this)(this.characters)){
-      console.log(app.eventBuffer)
+      this.showDialog({text: this.preCheckFailure})
+      this.this.gameScene.sceneTracker.gameOver()
     }
   }
 
@@ -179,7 +180,6 @@ class LevelUI extends Scene {
 
   displayObstacle(){
     if(!this.displayingObstacle){
-      console.log("Displaying obstacle")
       this.removeComponent(this.characterAction)
       this.removeComponent(this.characterInfo)
 
@@ -206,10 +206,8 @@ class LevelUI extends Scene {
     super.processEvt(evt)
     if(evt.type=="switchInfo"){
       if(evt.key>=49 && evt.key<54){
-        console.log("Displaying info")
         this.displayCharacterInfo()
       } else if(evt.key==79){
-        console.log("Displaying obstacle")
         this.displayObstacle()
       }
     }

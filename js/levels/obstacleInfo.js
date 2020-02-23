@@ -46,6 +46,7 @@ class ObstacleInfo extends GameObject {
       wordWrapWidth: 400
     })
     this.textContainer = null
+    this.text = text
     this.displayInfo(text)
   }
 
