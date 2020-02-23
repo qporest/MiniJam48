@@ -24,12 +24,27 @@ class LevelScene extends Scene {
     return true
   }
 
-  showDialog(obj){
+  displayDialog(obj){
     console.log("Showing dialogue to say "+obj.text)
     let dialogue = new DialogueScene()
     dialogue.init(this.app)
     this.app.pushScene(dialogue)
     dialogue.setDialogue(obj)
+  }
+
+  showDialog(obj){
+    this.app.eventBuffer.push({
+      type: "showLevelDialog",
+      text: obj.text,
+      persistent: true   
+    })
+  }
+
+  gameOver(){
+    this.app.eventBuffer.push({
+      type: "gameOver",
+      persistent: true   
+    })
   }
 
   finish(character){
@@ -41,7 +56,7 @@ class LevelScene extends Scene {
       this.gameScene.sceneTracker.nextScene()
     } else {
       this.showDialog({text: character.getFailureMessage()})
-      this.gameScene.sceneTracker.gameOver()
+      this.gameOver()
     }
   }
 
@@ -66,7 +81,7 @@ class LevelScene extends Scene {
     /* Some wrong decision was made before, dispay the losing screen */
     if(!this.preCheck.bind(this)(this.characters)){
       this.showDialog({text: this.preCheckFailure})
-      this.gameScene.sceneTracker.gameOver()
+      this.gameOver()
     }
   }
 
@@ -92,8 +107,10 @@ class LevelScene extends Scene {
     console.log("Got an event!!")
     super.processEvt(evt)
     if(evt.type==="showLevelDialog"){
-      this.showDialog({text: evt.text})
+      this.displayDialog({text: evt.text})
       evt.processed = true
+    } else if (evt.type == "gameOver"){
+      this.gameScene.sceneTracker.gameOver()
     }
   }
 }

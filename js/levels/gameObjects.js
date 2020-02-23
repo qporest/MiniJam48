@@ -136,6 +136,10 @@ class Character extends GameObject {
 		return this.script.getCharacterSacrifice(this.name)
 	}
 
+	getFailureMessage(){
+		return this.script.getFailureMessage(this.name)
+	}
+
 	updateDialog(){
 		this.dialog = this.script.getCharacterDialog(this.name)
 	}
