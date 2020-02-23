@@ -65,10 +65,18 @@ class LevelUI extends Scene {
     this.stage.x = 0
 
     this.charSelection = new CharacterSelection(characters, this)
-    this.gameObjects.push(this.charSelection)
+    this.UI.push(this.charSelection)
     this.stage.addChild(this.charSelection.stage)
+
+    this.characterAction = new CharacterAction(this)
+    this.stage.addChild(this.characterAction.stage)
+    this.UI.push(this.characterAction)
 
     this.charInfo = new CharacterInfo(characters, this, "Necromancer")
     this.stage.addChild(this.charInfo.stage)
+  }
+
+  volunteer(){
+    console.log("volunteering")
   }
 }

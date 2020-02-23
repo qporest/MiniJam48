@@ -1,6 +1,7 @@
-class CharacterInfo extends Scene {
+class CharacterInfo extends GameObject {
   constructor(characters, scene, activeCharacter){
-    super({UI: [], gameObjects: []})
+    super()
+    this.stage = new PIXI.Container()
     this.stage.width = 480
     this.stage.height = 160
     this.stage.y = 40
@@ -9,16 +10,7 @@ class CharacterInfo extends Scene {
     this.activeCharacter = activeCharacter
     this.characters = characters
 
-    this.displayCharacterInfo(characters[activeCharacter])
-  }
-
-  displayCharacterInfo(character){
-    let icon = getRectangle(80, 80)
-    icon.x = 20
-    icon.y = 100
-    this.stage.addChild(icon)
-
-    let h1 = new PIXI.TextStyle({
+    this.h1 = new PIXI.TextStyle({
       fontFamily: "arcade",
       fontSize: 10,
       fill: "#DDDCD6",
@@ -27,8 +19,17 @@ class CharacterInfo extends Scene {
       wordWrap: true,
       wordWrapWidth: 320
     })
+    this.h1long = new PIXI.TextStyle({
+      fontFamily: "arcade",
+      fontSize: 10,
+      fill: "#DDDCD6",
+      stroke: "black",
+      strokeThickness: 0,
+      wordWrap: true,
+      wordWrapWidth: 440
+    })
 
-    let h2 = new PIXI.TextStyle({
+    this.h2 = new PIXI.TextStyle({
       fontFamily: "arcade",
       fontSize: 9,
       fill: "#DDDCD6",
@@ -38,25 +39,80 @@ class CharacterInfo extends Scene {
       wordWrapWidth: 80,
       align: 'center'
     })
+    this.h2long = new PIXI.TextStyle({
+      fontFamily: "arcade",
+      fontSize: 9,
+      fill: "#DDDCD6",
+      stroke: "black",
+      strokeThickness: 0,
+      wordWrap: true,
+      wordWrapWidth: 440
+    })
 
-    this.name = new PIXI.Text(character.name, h2)
-    this.name.x = 20
-    this.name.y = 105
-    this.stage.addChild(this.name)
 
-
-    this.bio = new PIXI.Text("Lorum ipsum dolor sit amet. conquistadors are fighting the bulls underwater", h1)
-    this.bio.x = 120
-    this.bio.y = 20
-    this.stage.addChild(this.bio)
+    this.dialogContainer = null
+    this.bioContainer = null
+    this.displayCharacter(characters[activeCharacter])
   }
 
-  processTouchEvent(evt, coord){
-    console.log("pressed on selection")
+  displayCharacter(character){
+    this.displayCharacterDialog(character)
+    this.displayCharacterBio(character)
   }
 
-  processNonTouchEvent(evt){
-    
+  displayCharacterBio(character){
+    if(this.bioContainer){
+      this.stage.removeChild(this.bioContainer)
+      this.bioContainer.destroy()
+    }
+    this.bioContainer = new PIXI.Container()
+    this.bioContainer.x = 0
+    this.bioContainer.y = 160
+    this.bioContainer.height = 120
+    this.bioContainer.width = 480
+
+    let role = new PIXI.Text(character.role, this.h2long)
+    role.x = 20
+    role.y = 20
+    this.bioContainer.addChild(role)
+
+    let bio = new PIXI.Text("Lorum ipsum dolor sit amet. conquistadors are fighting the bulls underwater", this.h1long)
+    bio.x = 20
+    bio.y = 50
+    this.bioContainer.addChild(bio)
+
+    this.stage.addChild(this.bioContainer)
+  }
+
+  displayCharacterDialog(character){
+    if(this.dialogContainer){
+      this.stage.removeChild(this.dialogContainer)
+      this.dialogContainer.destroy()
+    }
+    this.dialogContainer = new PIXI.Container()
+    this.dialogContainer.x = 0
+    this.dialogContainer.y = 0
+    this.dialogContainer.width = 480
+    this.dialogContainer.height = 160
+
+    let icon = getRectangle(80, 80)
+    icon.x = 20
+    icon.y = 100
+    this.dialogContainer.addChild(icon)
+
+    let name = new PIXI.Text(character.name, this.h2)
+    name.x = 60
+    name.y = 105
+    name.anchor.set(0.5, 0)
+    this.dialogContainer.addChild(name)
+
+
+    let dialog = new PIXI.Text("Lorum ipsum dolor sit amet. conquistadors are fighting the bulls underwater", this.h1)
+    dialog.x = 120
+    dialog.y = 20
+    this.dialogContainer.addChild(dialog)
+
+    this.stage.addChild(this.dialogContainer)
   }
 }
 

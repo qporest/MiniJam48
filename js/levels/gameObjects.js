@@ -29,14 +29,41 @@ class KeyAndSpriteButton extends SpriteButton {
   	}
 }
 
+class TextKeyAndSpriteButton extends KeyAndSpriteButton {
+
+	constructor(text, callback, key){
+		let btn = new PIXI.Container()
+		console.log("Creating button with text", text)
+		let txtStyle = new PIXI.TextStyle({
+	      fontFamily: "arcade",
+	      fontSize: 10,
+	      fill: "#FFFFFF",
+	      stroke: "white",
+	      strokeThickness: 0,
+	      wordWrapWidth: 120
+	    })
+		let txt = new PIXI.Text(text, txtStyle)
+		txt.anchor.set(0, 0)
+	    txt.x = 10
+	    txt.y = (40-txt.height)/2
+	    let bg = new PIXI.Graphics()
+	    btn.addChild(txt)
+	    bg.lineStyle(2, 0xFFFFFF)
+	    bg.drawRect(0, 0, txt.width+20, 40)
+	    btn.addChild(bg)
+	    super(btn, callback, key)
+	}
+}
+
 class Character extends GameObject {
 	LEFT_MARGIN=20
 	CHAR_MARGIN=10
 	CHAR_WIDTH =48
 
-	constructor(name, sprite, pos){
+	constructor(name, role, sprite, pos){
 		super()
 		this.sprite = sprite
+		this.role = role
 		this.name = name
 		if(this.sprite.anchor){
 			this.sprite.anchor.set(0, 1)
