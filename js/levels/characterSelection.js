@@ -26,7 +26,7 @@ class CharacterSelection extends Scene {
     }
 
     let obstacle = new TextKeyAndSpriteButton("[O]bstacle", 
-      ()=>{console.log("clicked or pressed")}, "O",
+      ()=>{console.log("clicked or pressed")}, 79,
       {
         color: "#FFFFFF",
         hexColor: 0xFFFFFF,

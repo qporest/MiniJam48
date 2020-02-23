@@ -9,7 +9,7 @@ class CharacterAction extends Scene {
     this.parent_scene = scene
     let volunteer = new TextKeyAndSpriteButton("[V]olunteer", ()=>{
       this.volunteer.bind(this)()
-    }, "v")
+    }, 86)
     volunteer.sprite.x = 120
     this.stage.addChild(volunteer.sprite)
     this.UI.push(volunteer)

@@ -20,7 +20,7 @@ class KeyAndSpriteButton extends SpriteButton {
 	}
 
 	processNonTouchEvent(evt){
-    	if(evt.key == this.key){
+    	if(evt.which == this.key){
     		this.callback()
     	}
   	}
@@ -76,7 +76,7 @@ class Character extends GameObject {
 		} else {
 			this.sprite.pivot.set(0, this.sprite.height)
 		}
-		this.key = (pos+1).toString()
+		this.key = 49+pos
 		this.pos = pos
 		this.updatePosition()
 	}
