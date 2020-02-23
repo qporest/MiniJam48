@@ -4,9 +4,8 @@ let game = new EscapeGame({
 		"./img/fox.png",
 		"./img/cleric.png",
 		"./img/cave_ceiling.png",
-		"./img/Ylvis.png",
 		"./img/Brody.png",
-		"./img/Floor.png",
+		"./img/floor.png",
 		"./img/Vader_RightFacing.png",
 		"./img/JessicaTable.png",
 		"./img/RupertTable.png",
@@ -24,11 +23,10 @@ let game = new EscapeGame({
 		"./img/Record.png"
 	],
 	sprite_mapping: {
-		'./img/Floor.png': 'floor',
+		'./img/floor.png': 'floor',
 		'./img/Vader_RightFacing.png': 'Vader',
 		'./img/fox.png': 'fox',
 		'./img/cave_ceiling.png': 'cave_ceiling',
-		'./img/Ylvis.png': 'Ylvis',
 		'./img/cleric.png': 'cleric',
 		'./img/Brody.png': 'Brody',
 		'./img/JessicaTable.png': 'JessicaTable',

@@ -32,17 +32,6 @@ class PIXIGameObject extends GameObject {
 	}
 }
 
-class SpriteButton extends PIXIGameObject {
-	constructor(sprite, callback){
-		super(sprite)
-		this.callback = callback
-	}
-
-	processTouchEvent(evt, localClick){
-		this.callback()
-	}
-}
-
 class TiledFloor extends PIXIGameObject {
 	/*
 	Tiled Floor is symmetrical, with walls around it. Only floor is clickable.

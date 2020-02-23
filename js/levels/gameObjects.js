@@ -9,19 +9,30 @@ function getRectangle(width, height, color=0xFFFF00, stroke=5) {
 	return graphics
 }
 
+class SpriteButton extends PIXIGameObject {
+	constructor(sprite, callback, key){
+		super(sprite)
+		this.callback = callback
+		this.key = key
+	}
+
+	processTouchEvent(evt, localClick){
+		this.callback(this.key)
+	}
+}
+
 /*
 Keyboard and Sprite button reacts to both a press on a certain key and
 on a touch with the same callback.
 */
 class KeyAndSpriteButton extends SpriteButton {
 	constructor(sprite, callback, key){
-		super(sprite, callback)
-		this.key = key
+		super(sprite, callback, key)
 	}
 
 	processNonTouchEvent(evt){
     	if(evt.which == this.key){
-    		this.callback()
+    		this.callback(this.key)
     	}
   	}
 }
@@ -58,6 +69,24 @@ class TextKeyAndSpriteButton extends KeyAndSpriteButton {
 	    btn.addChild(bg)
 
 	    super(btn, callback, key)
+
+	    this.color = color
+	    this.hexColor = hexColor
+	    this.width = width
+	    this.height = height
+	    this.text = text
+	    this.bg = bg
+	    this.txt = txt
+	}
+
+	activate(){
+		this.bg.tint  = 0xFF5906
+		this.txt.tint = 0xFF5906
+	}
+
+	deactivate(){
+		this.bg.tint = this.hexColor
+		this.txt.tint = this.hexColor
 	}
 }
 

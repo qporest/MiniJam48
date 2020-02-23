@@ -6,10 +6,15 @@ class CharacterSelection extends Scene {
     this.stage.y = 0
     this.stage.x = 0
 
+    this.parent_scene = scene
+
     this.characters = characters
     for(let c in characters){
-      let button = new TextKeyAndSpriteButton(`[${characters[c].pos}]`, 
-        ()=>{console.log("clicked or pressed")}, characters[c].key,
+      let button = new TextKeyAndSpriteButton(`[${characters[c].pos+1}]`, 
+        (key)=>{
+          this.parent_scene.changeCharacter.bind(this)(key-49)
+          this.changeActive.bind(this)(key-49)
+        }, characters[c].key,
         {
           color: "#FFFFFF",
           hexColor: 0xFFFFFF,
@@ -26,7 +31,10 @@ class CharacterSelection extends Scene {
     }
 
     let obstacle = new TextKeyAndSpriteButton("[O]bstacle", 
-      ()=>{console.log("clicked or pressed")}, 79,
+      ()=>{
+        this.changeActive.bind(this)(5)
+        this.parent_scene.showObstacle.bind(this)()
+      }, 79,
       {
         color: "#FFFFFF",
         hexColor: 0xFFFFFF,
@@ -36,9 +44,20 @@ class CharacterSelection extends Scene {
     )
     obstacle.sprite.x = 340
     obstacle.sprite.y = 5
+    this.obstacle = obstacle
 
-    this.stage.addChild(obstacle.sprite)
+    this.stage.addChild(this.obstacle.sprite)
     this.UI.push(obstacle)
+
+    this.currentActiveButtton = 5
+    this.changeActive(this.currentActiveButtton)
+  }
+
+  changeActive(num){
+    console.log(num)
+    this.UI[this.currentActiveButtton].deactivate()
+    this.UI[num].activate()
+    this.currentActiveButtton = num
   }
 
   processTouchEvent(evt, coord){
