@@ -46,13 +46,14 @@ class LevelCave extends GameObject {
     this.stage.height = 160
 
     this.characters = characters
-    if(background){
-      this.stage.addChild(background)
-    }
+    
     console.log(this.stage.y)
     for(let c in characters){
       this.stage.addChild(characters[c].sprite)
       console.log(characters[c].sprite)
+    }
+    if(background){
+      this.stage.addChild(background)
     }
   }
 }
