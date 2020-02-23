@@ -13,12 +13,13 @@ class DialogueScene extends Scene {
   }
 
   init(app){
+    this.start = performance.now()
     this.app = app
     this.stage.width = this.WIDTH
     this.stage.height = this.HEIGHT
-    this.stage.alpha = 0.8
+    this.stage.alpha = 0.9
     this.stage.x = this.app.canvas.width/2 - this.WIDTH/2
-    this.stage.y = this.app.canvas.height/4 - this.HEIGHT/2
+    this.stage.y = this.app.canvas.height/2 - this.HEIGHT/2
     this.dialogue = new PIXI.Graphics()
     this.dialogue.beginFill(0x000000)
     this.dialogue.drawRect(0, 0, this.WIDTH, this.HEIGHT)
@@ -38,7 +39,7 @@ class DialogueScene extends Scene {
     }
     let textStyle = new PIXI.TextStyle({
       fontFamily: "arcade",
-      fontSize: 20,
+      fontSize: 18,
       fill: "#FFFFFF",
       stroke: "white",
       strokeThickness: 0,
@@ -52,9 +53,12 @@ class DialogueScene extends Scene {
   }
 
   processEvt(evt) {
-    console.log("Event in the dialogue!!!")
-    this.stage.destroy()
-    this.app.popScene()
+    if(evt.type=="touch" || evt.type=="keydown"){
+      console.log("Dialogue ended by ")
+      console.log(evt)
+      this.stage.destroy()
+      this.app.popScene()
+    }
   }
 
 }

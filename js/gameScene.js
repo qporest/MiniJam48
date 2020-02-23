@@ -29,7 +29,10 @@ class GameScene extends Scene {
         "Necromancer",
         "Race:ogre   class:necromancer", 
         getRectangle(48, 80), 
-        0
+        0,
+        {
+          necromancy: true
+        }
       ),
       "Fox": new Character(
         "Fox",
@@ -53,7 +56,10 @@ class GameScene extends Scene {
         "Dwarf",   
         "Race:dwarf  class:warrior", 
         getRectangle(48, 60), 
-        1
+        1,
+        {
+          dwarf: true
+        }
       )
     }
   }
@@ -109,17 +115,57 @@ class SceneTracker {
     this.gameScene = scene
     this.app = app
     this.currentScene = 0
+    this.initDB()
     this.script = {
       0: {
-        scene: new LevelScene(this.gameScene),
-        preCheck: null,
-        postCheck: null,
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["0"]["description"]
+          }, 
+          this.db["obstacles"]["0"]["preCheckFailure"]
+        ),
         next: 1
       },
       1: {
-        scene: new LevelScene(this.gameScene),
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["1"]["description"]
+          }, 
+          this.db["obstacles"]["1"]["preCheckFailure"],
+          false
+        ),
+        postCheck: (char, chars)=>Object.values(chars).filter(x=>x.params.necromancy).length > 0,
+        next: 2
+      },
+      2: {
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["2"]["description"]
+          }, 
+          this.db["obstacles"]["2"]["preCheckFailure"],
+          false
+        ),
+        preCheck: function(chars){
+          if(Object.values(chars).filter(x=>x.params.dwarf).length == 0){
+            console.log("Dwarf text event")
+            app.eventBuffer.push({
+              type: "showLevelDialog",
+              text: "Unfortunately without dwarf our chances are 1 in 3",
+              persistent: true
+            })
+            console.log(app.eventBuffer[app.eventBuffer.length-1])
+          }
+          return true
+        },
+        postCheck: function(char, chars){
+          if(Object.values(chars).filter(x=>x.params.dwarf).length == 0){
+            if(Math.floor(Math.random()*100)<33){
+              return true
+            } else {
+              return false
+            }
+          }
+          return true
+        },
         next: "final"
-      }
+      },
     }
   }
 
@@ -137,5 +183,216 @@ class SceneTracker {
       this.currentScene = next
       this.setScene()
     }
+  }
+
+  initDB(){
+
+    this.db = {
+      "Necromancer": {
+        "0": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "1": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "2": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "3": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "4": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "5": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "6": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "7": {
+          thinking: "",
+          sacrifice: ""          
+        }
+      },
+      "Fox": {
+        "0": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "1": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "2": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "3": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "4": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "5": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "6": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "7": {
+          thinking: "",
+          sacrifice: ""          
+        }
+      },
+      "Cleric": {
+        "0": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "1": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "2": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "3": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "4": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "5": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "6": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "7": {
+          thinking: "",
+          sacrifice: ""          
+        }
+      },
+      "Dwarf": {
+        "0": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "1": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "2": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "3": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "4": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "5": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "6": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "7": {
+          thinking: "",
+          sacrifice: ""          
+        }
+      },
+      "Elf": {
+        "0": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "1": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "2": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "3": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "4": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "5": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "6": {
+          thinking: "",
+          sacrifice: ""
+        },
+        "7": {
+          thinking: "",
+          sacrifice: ""          
+        }
+      },
+      "obstacles": {
+        "0": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "1": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "2": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "3": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "4": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "5": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "6": {
+          description: "",
+          preCheckFailure: ""
+        },
+        "7": {
+          description: "",
+          preCheckFailure: ""          
+        }
+      }
+    }
+
   }
 }

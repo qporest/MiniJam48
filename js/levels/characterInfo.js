@@ -53,7 +53,7 @@ class CharacterInfo extends GameObject {
     this.dialogContainer = null
     this.bioContainer = null
     console.log("Recreating char info")
-    this.displayCharacter(characters[activeCharacter])
+    // this.displayCharacter(characters[activeCharacter])
   }
 
   displayCharacter(character){
@@ -127,7 +127,7 @@ class CharacterInfo extends GameObject {
   }
 
   processEvt(evt){
-    if(evt.type=="switchInfo"){
+    if(evt.type=="switchInfo" || evt.type=="refreshInfo"){
       console.log("processing event in info")
       if(evt.key>=49 && evt.key<54){
         let char = Object.values(this.characters).filter(x => x.pos==evt.key-49)[0]

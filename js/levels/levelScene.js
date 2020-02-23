@@ -2,61 +2,60 @@ class LevelScene extends Scene {
   constructor(gameScene, obj = {
     UI: [],
     gameObjects: []
-  }) {
+  }, obstacle = {
+    text: "test",
+    sprite: getRectangle(120, 120)
+  }, preCheckFailure="test", sacrificial=true) {
     super(obj)
     this.gameScene = gameScene
     this.cave = null
     this.app = null
+    this.sacrificial = sacrificial
+    this.obstacleText = obstacle.text
+    this.obstacleSprite = obstacle.sprite
+    this.preCheckFailure = preCheckFailure
   }
 
-  preCheck(){
+  preCheck(characters){
     return true
   }
 
-  postCheck(){
+  postCheck(character, characters){
     return true
+  }
+
+  showDialog(obj){
+    console.log("Showing dialogue to say "+obj.text)
+    let dialogue = new DialogueScene()
+    dialogue.init(this.app)
+    this.app.pushScene(dialogue)
+    dialogue.setDialogue(obj)
   }
 
   finish(character){
-    delete this.characters[character.name]
-    if(this.postCheck()){
+    if(this.sacrificial){
+      delete this.characters[character.name]
+    }
+    if(this.postCheck.bind(this)(character, this.characters)){
       this.gameScene.sceneTracker.nextScene()
-      let dialogue = new DialogueScene()
-      dialogue.init(this.app)
-      this.app.pushScene(dialogue)
-      dialogue.setDialogue({
-        text: "well done"
-      })
+      this.showDialog({text: "Well done"})
     } else {
-      let dialogue = new DialogueScene()
-      dialogue.init(this.app)
-      this.app.pushScene(dialogue)
-      dialogue.setDialogue({
-        text: "test"
-      })
+      this.showDialog({text: "It sucks to suck"})
     }
   }
 
   init(app, preCheck, postCheck){
+    super.init(app)
     this.preCheck = preCheck || this.preCheck
     this.postCheck = postCheck || this.postCheck
 
     this.HEIGHT = 480
     this.WIDTH = 480
-    let textStyle = new PIXI.TextStyle({
-      fontFamily: "arcade",
-      fontSize: 36,
-      fill: "#DDDCD6",
-      stroke: "black",
-      strokeThickness: 0,
-      wordWrap: true,
-      wordWrapWidth: 400
-    })
 
     this.app = app
     this.characters = this.gameScene.characters
 
-    this.cave = new LevelCave(this.characters, app.sprites["cave_ceiling"], app.sprites["floor"], app.sprites["background"])
+    this.cave = new LevelCave(this.characters, app.sprites["cave_ceiling"], app.sprites["floor"], app.sprites["background"], this.obstacleSprite)
     this.stage.addChild(this.cave.stage)
 
     this.ui = new LevelUI(this.characters, this, app)
@@ -64,8 +63,8 @@ class LevelScene extends Scene {
     this.UI.push(this.ui)
 
     /* Some wrong decision was made before, dispay the losing screen */
-    if(!this.preCheck){
-
+    if(!this.preCheck.bind(this)(this.characters)){
+      console.log(app.eventBuffer)
     }
   }
 
@@ -82,14 +81,24 @@ class LevelScene extends Scene {
       case 79:
         /* one of the characters or obstacle were clicked */
         this.app.eventBuffer.push({type: "switchInfo", key: key})
+        this.app.eventBuffer.push({type: "refreshInfo", key: key})
       break;
+    }
+  }
+
+  processEvt(evt){
+    console.log("Got an event!!")
+    super.processEvt(evt)
+    if(evt.type==="showLevelDialog"){
+      this.showDialog({text: evt.text})
+      evt.processed = true
     }
   }
 }
 
 
 class LevelCave extends GameObject {
-  constructor(characters, foreground, floor, background){
+  constructor(characters, foreground, floor, background, obstacle){
     super()
     this.stage = new PIXI.Container()
     this.stage.width = 480
@@ -102,8 +111,15 @@ class LevelCave extends GameObject {
     }
     for(let c in characters){
       this.stage.addChild(characters[c].sprite)
-      console.log(characters[c].sprite)
     }
+
+    if(obstacle){
+      obstacle.x = 340
+      obstacle.y = 160
+      obstacle.pivot.set(0, obstacle.height)
+      this.stage.addChild(obstacle)
+    }
+
     if(foreground){
       foreground.x = -Math.floor(Math.random()*480)
       this.stage.addChild(foreground)
@@ -134,7 +150,7 @@ class LevelUI extends Scene {
     this.characterAction = new CharacterAction(this)
     this.characterInfo = new CharacterInfo(characters, this, Object.keys(characters)[0])
     
-    this.obstacleInfo = new ObstacleInfo("this is the first one in a series of a long series of texts. Gotta put all this knowledge and information here, otherwiseitsdsfjsdjhflk;sjdfjldsfjl")
+    this.obstacleInfo = new ObstacleInfo(this.parentScene.obstacleText)
 
     this.displayingObstacle = false
     this.displayObstacle()
@@ -189,7 +205,6 @@ class LevelUI extends Scene {
   processEvt(evt){
     super.processEvt(evt)
     if(evt.type=="switchInfo"){
-      console.log("processing event in info")
       if(evt.key>=49 && evt.key<54){
         console.log("Displaying info")
         this.displayCharacterInfo()
@@ -199,5 +214,4 @@ class LevelUI extends Scene {
       }
     }
   }
-
 }

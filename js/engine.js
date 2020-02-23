@@ -40,7 +40,7 @@ class Game {
     this.setUpCanvas(options)
     this.loadSprites(options)
       // set up the keyboard listener
-    document.addEventListener('keyup', this.processEvt.bind(this))
+    document.addEventListener('keydown', this.processEvt.bind(this))
     this.canvas.addEventListener('mousedown', this.processClickEvt.bind(this))
     this.canvas.addEventListener('touchstart', this.processTouchEvt.bind(this))
   }
@@ -112,7 +112,6 @@ class Game {
     console.log("Scene popped")
     let latest = this.scene.pop()
     this.stage.removeChild(latest.stage)
-    this.eventBuffer.length = 0
     latest.stage.visible = false
     this.currentScene = this.scene[this.scene.length - 1]
     return latest
@@ -151,10 +150,15 @@ class Game {
    */
   update(now) {
     // process all the events recorded
+    let persistentEvents = []
+
     for (let event of this.eventBuffer) {
       this.currentScene.processEvt(event)
+      if(event.persistent && !event.processed) {
+        persistentEvents.push(event)
+      }
     }
-    this.eventBuffer.length = 0
+    this.eventBuffer = persistentEvents
       // process frame at given fps
       // if there is a need to catch up on update logic
     dt += Math.min(1, (now - last) / 1000)
