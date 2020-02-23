@@ -29,7 +29,7 @@ class GameScene extends Scene {
       "Necromancer": new Character(
         "Necromancer",
         this.sceneTracker,
-        getRectangle(48, 80), 
+        app.sprites["necromancer"], 
         {
           necromancy: true
         }
@@ -52,7 +52,7 @@ class GameScene extends Scene {
       "Dwarf": new Character(
         "Dwarf",
         this.sceneTracker,  
-        getRectangle(48, 60), 
+        getRectangle(48, 80), 
         {
           dwarf: true
         }
@@ -155,6 +155,15 @@ class SceneTracker {
   getCharacterDialog(char){
     return this.db[char][this.currentScene].thinking
   }
+
+  getCharacterSacrifice(char){
+    return this.db[char][this.currentScene].sacrifice
+  }
+
+  getFailureMessage(char){
+    return this.db[char][this.currentScene].fail
+  }
+
   getCharacterInfo(char){
     return this.db[char]["info"]
   }
@@ -310,11 +319,13 @@ class SceneTracker {
         },
         "0": {
           thinking: "An opportunity for sacrifice? This early on? It's not a battle death, but a worthy sacrifice is still a ticket to Valhalla.",
-          sacrifice: "I hope you get to live. Mostly so that you get to tell the tale of my brave sacrifice! Also, please check that my lights are off at home. For the planet."
+          sacrifice: "I hope you get to live. Mostly so that you get to tell the tale of my brave sacrifice! Also, please check that my lights are off at home. For the planet.",
+          fail: "",
         },
         "1": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "No wonder he couldn't finish his writing. Those masonry tools are so outdated, at least for dwarves ha-ha-ha.",
+          sacrifice: "",
+          fail: "Group placed their trust in dwarf due to his masonry experience. This had nothing to do with the magic door however, and they couldn't get out of the room before evil forces catching up to them."
         },
         "2": {
           thinking: "",
@@ -348,12 +359,14 @@ class SceneTracker {
           pos: 1
         },
         "0": {
-          thinking: "That level looks rusty. Royalty never shall touch rusty objects, but I can't lose face either, so whatever needs to be done.",
-          sacrifice: ""
+          thinking: "That lever looks rusty. Royalty never shall touch rusty objects, but I can't lose face either, so whatever needs to be done.",
+          sacrifice: "Tell the tale to my kingdom, let them know that elvian princesses die with class."
         },
         "1": {
-          thinking: "All these skeletons make me think that maybe underneath our bodies we are all the same. Except the dwarves of course.",
-          sacrifice: ""
+          thinking: "I bet I can learn what this skeleton is thinking by practicing my method acting. Though it's kind of dirty over there.",
+          sacrifice:"",
+          fail: "The princess employed her method acting skills to really get in the mind of the skeleton and find out what the final word was."+
+            "This did not yield any results and the evil caught up with the group."
         },
         "2": {
           thinking: "",
@@ -387,8 +400,8 @@ class SceneTracker {
           preCheckFailure: ""
         },
         "1": {
-          description: `There's an insciption on the wall. It says "To pass without harm one must say the magical word - ", and then it stops.
-          There's a skeleton below the insciption, still holding his masonry tools - bounded to forever work on the writing and never finish it.`,
+          description: `There's an insciption on the wall. It says "To pass without harm one must say the magical word - ", and then it stops.\n`+
+          "There's a skeleton below the insciption, still holding his masonry tools - bound to forever work on the writing and never finish it.",
           preCheckFailure: ""
         },
         "2": {

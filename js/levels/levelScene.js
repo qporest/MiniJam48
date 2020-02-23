@@ -35,12 +35,13 @@ class LevelScene extends Scene {
   finish(character){
     if(this.sacrificial){
       delete this.characters[character.name]
+      this.showDialog({text: character.getSacrifice()})
     }
     if(this.postCheck.bind(this)(character, this.characters)){
       this.gameScene.sceneTracker.nextScene()
-      this.showDialog({text: "Well done"})
     } else {
-      this.showDialog({text: "It sucks to suck"})
+      this.showDialog({text: character.getFailureMessage()})
+      this.gameScene.sceneTracker.gameOver()
     }
   }
 
@@ -65,7 +66,7 @@ class LevelScene extends Scene {
     /* Some wrong decision was made before, dispay the losing screen */
     if(!this.preCheck.bind(this)(this.characters)){
       this.showDialog({text: this.preCheckFailure})
-      this.this.gameScene.sceneTracker.gameOver()
+      this.gameScene.sceneTracker.gameOver()
     }
   }
 

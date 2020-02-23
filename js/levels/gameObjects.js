@@ -132,6 +132,10 @@ class Character extends GameObject {
 		return {y:160, x: this.pos*(this.CHAR_MARGIN+this.CHAR_WIDTH) + this.LEFT_MARGIN}
 	}
 
+	getSacrifice(){
+		return this.script.getCharacterSacrifice(this.name)
+	}
+
 	updateDialog(){
 		this.dialog = this.script.getCharacterDialog(this.name)
 	}
