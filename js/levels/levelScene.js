@@ -82,23 +82,31 @@ class LevelUI extends Scene {
     this.stage.addChild(this.charSelection.stage)
 
     this.characterAction = new CharacterAction(this)
-    this.UI.push(this.characterAction)
-
     this.characterInfo = new CharacterInfo(characters, this, "Necromancer")
-    this.UI.push(this.characterInfo)
-
+    
     this.obstacleInfo = new ObstacleInfo("this is the first one in a series of a long series of texts. Gotta put all this knowledge and information here, otherwiseitsdsfjsdjhflk;sjdfjldsfjl")
-    this.UI.push(this.obstacleInfo)
 
     this.displayingObstacle = false
     this.displayObstacle()
   }
 
+  removeComponent(component){
+    let idx = this.UI.indexOf(component)
+    if(idx>=0){ this.UI.splice(idx, 1) }
+    this.stage.removeChild(component.stage)
+  }
+
+  addComponent(component){
+    this.stage.addChild(component.stage)
+    this.UI.push(component)
+  }
+
   displayCharacterInfo(){
     if(this.displayingObstacle){
-      this.stage.removeChild(this.obstacleInfo.stage)
-      this.stage.addChild(this.characterAction.stage)
-      this.stage.addChild(this.characterInfo.stage)
+      this.removeComponent(this.obstacleInfo)
+      
+      this.addComponent(this.characterAction)
+      this.addComponent(this.characterInfo)
       this.displayingObstacle = false
     }
   }
@@ -106,15 +114,21 @@ class LevelUI extends Scene {
   displayObstacle(){
     if(!this.displayingObstacle){
       console.log("Displaying obstacle")
-      this.stage.removeChild(this.characterAction.stage)
-      this.stage.removeChild(this.characterInfo.stage)
-      this.stage.addChild(this.obstacleInfo.stage)
+      this.removeComponent(this.characterAction)
+      this.removeComponent(this.characterInfo)
+
+      this.addComponent(this.obstacleInfo)
       this.displayingObstacle = true
     }
   }
 
   volunteer(){
-    console.log("volunteering")
+    let current = this.charSelection.getActiveCharacter()
+    if(current){
+      console.log(current.name + "is volunteering")
+    } else {
+      alert("Something fishy is going on. Error code: 0")
+    }
   }
 
   changeDisplay(key){

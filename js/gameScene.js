@@ -33,11 +33,12 @@ class GameScene extends Scene {
 
   initGameLogic(app){
     this.characters = {
-      "Necromancer": new Character("Petya the necromancer", "Race:ogre class:necromancer", getRectangle(48, 80), 0),
-      "Fox": new Character("Fox", "Race:fox class:k9", app.sprites["fox"], 1),
-      "Elf": new Character("Elf", "Race:elf class:royalty", getRectangle(48, 80), 2),
-      "Clerik": new Character("Clerik", "Race:human class:clerik", app.sprites["cleric"], 3),
-      "Dwarf": new Character("Dwarf", "Race:dward class:warrior", getRectangle(48, 60), 4)
+      "Necromancer": new Character("Petya the necromancer", 
+                                        "Race:ogre   class:necromancer", getRectangle(48, 80), 0),
+      "Fox": new Character("Fox",       "Race:fox    class:k9", app.sprites["fox"], 1),
+      "Elf": new Character("Elf",       "Race:elf    class:royalty", getRectangle(48, 80), 2),
+      "Clerik": new Character("Clerik", "Race:human  class:cleric", app.sprites["cleric"], 3),
+      "Dwarf": new Character("Dwarf",   "Race:dward  class:warrior", getRectangle(48, 60), 4)
     }
   }
 

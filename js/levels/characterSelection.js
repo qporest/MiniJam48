@@ -57,6 +57,10 @@ class CharacterSelection extends Scene {
     this.parent_scene.changeDisplay(num)
   }
 
+  getActiveCharacter(){
+    return Object.values(this.characters).filter(x => x.key && x.key == this.currentActiveButtton)[0]
+  }
+
   changeActive(num){
     let cur = this.UI.filter(x => x.key && x.key == this.currentActiveButtton)
     if(cur){
