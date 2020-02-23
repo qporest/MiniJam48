@@ -80,8 +80,8 @@ class TextKeyAndSpriteButton extends KeyAndSpriteButton {
 	}
 
 	activate(){
-		this.bg.tint  = 0xFF5906
-		this.txt.tint = 0xFF5906
+		this.bg.tint  = 0x23E3FF
+		this.txt.tint = 0x23E3FF
 	}
 
 	deactivate(){
