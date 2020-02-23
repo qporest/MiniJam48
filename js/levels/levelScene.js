@@ -68,8 +68,6 @@ class LevelUI extends Scene {
   constructor(characters, scene, app){
     super({UI: [], gameObjects: []})
     this.gameScene = scene
-    console.log("APP!")
-    console.log(app)
     this.app = app
 
     this.stage.width = 480
@@ -82,12 +80,35 @@ class LevelUI extends Scene {
     this.stage.addChild(this.charSelection.stage)
 
     this.characterAction = new CharacterAction(this)
-    this.stage.addChild(this.characterAction.stage)
     this.UI.push(this.characterAction)
 
-    this.charInfo = new CharacterInfo(characters, this, "Necromancer")
-    this.stage.addChild(this.charInfo.stage)
-    this.UI.push(this.charInfo)
+    this.characterInfo = new CharacterInfo(characters, this, "Necromancer")
+    this.UI.push(this.characterInfo)
+
+    this.obstacleInfo = new ObstacleInfo("this is the first one in a series of a long series of texts. Gotta put all this knowledge and information here, otherwiseitsdsfjsdjhflk;sjdfjldsfjl")
+    this.UI.push(this.obstacleInfo)
+
+    this.displayingObstacle = false
+    this.displayObstacle()
+  }
+
+  displayCharacterInfo(){
+    if(this.displayingObstacle){
+      this.stage.removeChild(this.obstacleInfo.stage)
+      this.stage.addChild(this.characterAction.stage)
+      this.stage.addChild(this.characterInfo.stage)
+      this.displayingObstacle = false
+    }
+  }
+
+  displayObstacle(){
+    if(!this.displayingObstacle){
+      console.log("Displaying obstacle")
+      this.stage.removeChild(this.characterAction.stage)
+      this.stage.removeChild(this.characterInfo.stage)
+      this.stage.addChild(this.obstacleInfo.stage)
+      this.displayingObstacle = true
+    }
   }
 
   volunteer(){
@@ -105,6 +126,20 @@ class LevelUI extends Scene {
         /* one of the characters or obstacle were clicked */
         this.app.eventBuffer.push({type: "switchInfo", key: key})
       break;
+    }
+  }
+
+  processEvt(evt){
+    super.processEvt(evt)
+    if(evt.type=="switchInfo"){
+      console.log("processing event in info")
+      if(evt.key>=49 && evt.key<54){
+        console.log("Displaying info")
+        this.displayCharacterInfo()
+      } else if(evt.key==79){
+        console.log("Displaying obstacle")
+        this.displayObstacle()
+      }
     }
   }
 

@@ -3,7 +3,7 @@ class CharacterInfo extends GameObject {
     super()
     this.stage = new PIXI.Container()
     this.stage.width = 480
-    this.stage.height = 160
+    this.stage.height = 280
     this.stage.y = 40
     this.stage.x = 0
 
