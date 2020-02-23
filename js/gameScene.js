@@ -110,9 +110,14 @@ class SceneTracker {
   constructor(scene, app){
     this.gameScene = scene
     this.app = app
-    this.currentScene = 0
+    this.currentScene = "tutorial"
     this.initDB()
     this.script = {
+      "tutorial":{
+        scene: new TutorialCutScene("Hello there tutorial", this),
+        next: "0",
+        tutorial: true
+      },
       "0": {
         // pulley / lever
         scene: new LevelScene(this.gameScene, undefined, {
@@ -286,6 +291,10 @@ class SceneTracker {
 
     this.db = {
       "Necromancer": {
+        "tutorial": {
+          thinking: "",
+          sacrifice: ""
+        },
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role: "Race:ogre   class:necromancer",
@@ -325,6 +334,10 @@ class SceneTracker {
         }
       },
       "Fox": {
+        "tutorial": {
+          thinking: "",
+          sacrifice: ""
+        },
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role:"Race:fox    class:k9",
@@ -364,6 +377,10 @@ class SceneTracker {
         }
       },
       "Cleric": {
+        "tutorial": {
+          thinking: "",
+          sacrifice: ""
+        },
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role:"Race:human  class:cleric",
@@ -403,6 +420,10 @@ class SceneTracker {
         }
       },
       "Dwarf": {
+        "tutorial": {
+          thinking: "",
+          sacrifice: ""
+        },
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role:"Race:dwarf  class:warrior",
@@ -444,6 +465,10 @@ class SceneTracker {
         }
       },
       "Elf": {
+        "tutorial": {
+          thinking: "",
+          sacrifice: ""
+        },
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
           role:"Race:elf    class:royalty",
@@ -485,6 +510,10 @@ class SceneTracker {
         }
       },
       "obstacles": {
+        "tutorial": {
+          description: "tutorial",
+          preCheckFailure: ""  
+        },
         "0": {
           description: "It's clear from the beginning - not everyone will make it out alive.\n" +
           "You see a metal gate and a lever that opens it. It looks like someone might need to keep it open so others can pass.",

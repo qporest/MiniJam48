@@ -57,6 +57,20 @@ class DialogueScene extends Scene {
     this.textObject.y = this.HEIGHT/2 - this.textObject.height/2
     this.textObject.style.lineHeight = 22
     this.dialogue.addChild(this.textObject)
+
+    let reminderTextStyle = new PIXI.TextStyle({
+      fontFamily: "arcade",
+      fontSize: 10,
+      fill: "#FFFFFF",
+      stroke: "white",
+      strokeThickness: 0,
+      wordWrap: true,
+      wordWrapWidth: 380
+    })
+    let reminder = new PIXI.Text("press any key to continue", reminderTextStyle)
+    reminder.x = this.WIDTH/2 - reminder.width/2
+    reminder.y = 370
+    this.dialogue.addChild(reminder)
   }
 
   processEvt(evt) {
@@ -68,4 +82,36 @@ class DialogueScene extends Scene {
     }
   }
 
+}
+
+class CutScene extends DialogueScene {
+  constructor(text, sceneTracker){
+    super()
+    this.sceneTracker = sceneTracker
+    this.text = text
+  }
+
+  init(app){
+    super.init(app)
+    this.setDialogue(this.text)
+  }
+
+  processEvt(evt) {
+    if(evt.type=="touch" || evt.type=="keydown"){
+      console.log("Dialogue ended by ")
+      console.log(evt)
+      this.stage.destroy()
+      this.sceneTracker.nextScene()
+    }
+  }
+}
+
+class TutorialCutScene extends CutScene {
+  init(app){
+    super.init(app)
+    this.setDialogue(this.text)
+    if(!this.app.firstTime){
+      this.sceneTracker.nextScene()
+    }
+  }
 }

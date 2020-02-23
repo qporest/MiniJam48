@@ -7,6 +7,7 @@ class EscapeGame extends Game {
 
 		super(options)
 
+		this.firstTime = true
 		this.musicEnabled = false
 
 		this.scenes = {
