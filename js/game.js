@@ -11,14 +11,15 @@ class EscapeGame extends Game {
 
 		this.scenes = {
 			preload: new InitScene(),
-			game: new GameScene()
+			game: new GameScene(),
+			menu: new MenuScene()
 		}
 		this.changeScene("preload")
 	}
 
 	resourcesLoaded(){
 		console.log("Game ready to start")
-		this.changeScene("game")
+		this.changeScene("menu")
 	}
 
 	loadSprites(options){

@@ -44,12 +44,13 @@ class TextKeyAndSpriteButton extends KeyAndSpriteButton {
 		let hexColor = options.hexColor || 0xFFFFFF
 		let width = options.width || null
 		let height = options.height || 40
+		let fontSize = options.fontSize || 10
 
 		let btn = new PIXI.Container()
 		console.log("Creating button with text", text)
 		let txtStyle = new PIXI.TextStyle({
 	      fontFamily: "arcade",
-	      fontSize: 10,
+	      fontSize: fontSize,
 	      fill: color,
 	      stroke: color,
 	      strokeThickness: 0,
