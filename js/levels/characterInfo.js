@@ -73,7 +73,7 @@ class CharacterInfo extends GameObject {
 
     let rect = getRectangle(480, 120, 0xFFFFFF, 2)
     rect.x = 0
-    rect.y = 160
+    rect.y = 0
     this.bioContainer.addChild(rect)
 
     let role = new PIXI.Text(character.role, this.h2long)
