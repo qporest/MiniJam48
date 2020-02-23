@@ -8,20 +8,37 @@ class CharacterSelection extends Scene {
 
     this.characters = characters
     for(let c in characters){
-      let rectangle = getRectangle(30, 30)
-      rectangle.x = characters[c].sprite.x+9
-      rectangle.y = 5
+      let button = new TextKeyAndSpriteButton(`[${characters[c].pos}]`, 
+        ()=>{console.log("clicked or pressed")}, characters[c].key,
+        {
+          color: "#FFFFFF",
+          hexColor: 0xFFFFFF,
+          width: 30,
+          height: 30
+        }
+      )
 
-      let button = new KeyAndSpriteButton(rectangle, ()=>{console.log("clicked or pressed")}, characters[c].key)
+      button.sprite.x = characters[c].sprite.x+9
+      button.sprite.y = 5
 
       this.stage.addChild(button.sprite)
       this.UI.push(button)
     }
 
-    let obstacle = getRectangle(120, 30)
-    obstacle.x = 340
-    obstacle.y = 5
-    this.stage.addChild(obstacle)
+    let obstacle = new TextKeyAndSpriteButton("[O]bstacle", 
+      ()=>{console.log("clicked or pressed")}, "O",
+      {
+        color: "#FFFFFF",
+        hexColor: 0xFFFFFF,
+        width: 120,
+        height: 30
+      }
+    )
+    obstacle.sprite.x = 340
+    obstacle.sprite.y = 5
+
+    this.stage.addChild(obstacle.sprite)
+    this.UI.push(obstacle)
   }
 
   processTouchEvent(evt, coord){

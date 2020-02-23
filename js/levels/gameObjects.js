@@ -1,13 +1,10 @@
-function getRectangle(width, height) {
+function getRectangle(width, height, color=0xFFFF00, stroke=5) {
 	let graphics = new PIXI.Graphics()
 
-	graphics.beginFill(0xFFFF00);
 	// set the line style to have a width of 5 and set the color to red
-	graphics.lineStyle(5, 0xFF0000)
+	graphics.lineStyle(stroke, color)
 	// draw a rectangle
 	graphics.drawRect(0, 0, width, height)
-
-	graphics.pivot.set(0, height)
 
 	return graphics
 }
@@ -31,26 +28,35 @@ class KeyAndSpriteButton extends SpriteButton {
 
 class TextKeyAndSpriteButton extends KeyAndSpriteButton {
 
-	constructor(text, callback, key){
+	constructor(text, callback, key, options={}){
+		let color = options.color || "#FFFFFF"
+		let hexColor = options.hexColor || 0xFFFFFF
+		let width = options.width || null
+		let height = options.height || 40
+
 		let btn = new PIXI.Container()
 		console.log("Creating button with text", text)
 		let txtStyle = new PIXI.TextStyle({
 	      fontFamily: "arcade",
 	      fontSize: 10,
-	      fill: "#FFFFFF",
-	      stroke: "white",
+	      fill: color,
+	      stroke: color,
 	      strokeThickness: 0,
 	      wordWrapWidth: 120
 	    })
 		let txt = new PIXI.Text(text, txtStyle)
-		txt.anchor.set(0, 0)
-	    txt.x = 10
-	    txt.y = (40-txt.height)/2
+		txt.anchor.set(0.5, 0)
+	    if(!width){
+	    	width = txt.width + 20
+	    }
+	    txt.x = width/2+1
+	    txt.y = (height-txt.height)/2
 	    let bg = new PIXI.Graphics()
 	    btn.addChild(txt)
-	    bg.lineStyle(2, 0xFFFFFF)
-	    bg.drawRect(0, 0, txt.width+20, 40)
+	    bg.lineStyle(2, hexColor)
+	    bg.drawRect(0, 0, width, height)
 	    btn.addChild(bg)
+
 	    super(btn, callback, key)
 	}
 }
@@ -67,6 +73,8 @@ class Character extends GameObject {
 		this.name = name
 		if(this.sprite.anchor){
 			this.sprite.anchor.set(0, 1)
+		} else {
+			this.sprite.pivot.set(0, this.sprite.height)
 		}
 		this.key = (pos+1).toString()
 		this.pos = pos
@@ -74,7 +82,7 @@ class Character extends GameObject {
 	}
 
 	getCoordinates(pos){
-		return {y:120, x: this.pos*(this.CHAR_MARGIN+this.CHAR_WIDTH) + this.LEFT_MARGIN}
+		return {y:160, x: this.pos*(this.CHAR_MARGIN+this.CHAR_WIDTH) + this.LEFT_MARGIN}
 	}
 
 	updatePosition(){

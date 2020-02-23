@@ -71,6 +71,11 @@ class CharacterInfo extends GameObject {
     this.bioContainer.height = 120
     this.bioContainer.width = 480
 
+    let rect = getRectangle(480, 120, 0xFFFFFF, 2)
+    rect.x = 0
+    rect.y = 160
+    this.bioContainer.addChild(rect)
+
     let role = new PIXI.Text(character.role, this.h2long)
     role.x = 20
     role.y = 20
@@ -95,9 +100,14 @@ class CharacterInfo extends GameObject {
     this.dialogContainer.width = 480
     this.dialogContainer.height = 160
 
+    let rect = getRectangle(480, 160, 0xFFFFFF, 2)
+    rect.x = 0
+    rect.y = 0
+    this.dialogContainer.addChild(rect)
+
     let icon = getRectangle(80, 80)
     icon.x = 20
-    icon.y = 100
+    icon.y = 20
     this.dialogContainer.addChild(icon)
 
     let name = new PIXI.Text(character.name, this.h2)
