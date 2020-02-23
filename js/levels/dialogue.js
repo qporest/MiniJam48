@@ -37,6 +37,12 @@ class DialogueScene extends Scene {
       this.sprite.y = this.HEIGHT/2 - this.sprite.height/2
       this.dialogue.addChild(this.sprite)
     }
+
+    let border = getRectangle(390, 390, 0xFFFFFF, 2)
+    border.x = 5
+    border.y = 5
+    this.dialogue.addChild(border)
+
     let textStyle = new PIXI.TextStyle({
       fontFamily: "arcade",
       fontSize: 18,
@@ -49,6 +55,7 @@ class DialogueScene extends Scene {
     this.textObject = new PIXI.Text(text, textStyle)
     this.textObject.x = 10
     this.textObject.y = this.HEIGHT/2 - this.textObject.height/2
+    this.textObject.style.lineHeight = 22
     this.dialogue.addChild(this.textObject)
   }
 

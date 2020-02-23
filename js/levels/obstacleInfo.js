@@ -55,6 +55,7 @@ class ObstacleInfo extends GameObject {
       this.stage.removeChild(this.textContainer)
       this.textContainer.destroy()
     }
+
     this.textContainer = new PIXI.Container()
     this.textContainer.x = 0
     this.textContainer.y = 0
@@ -69,6 +70,7 @@ class ObstacleInfo extends GameObject {
     let role = new PIXI.Text(text, this.h2long)
     role.x = 30
     role.y = 30
+    role.style.lineHeight = 15
     this.textContainer.addChild(role)
 
     this.stage.addChild(this.textContainer)

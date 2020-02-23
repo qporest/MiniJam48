@@ -86,6 +86,7 @@ class CharacterInfo extends GameObject {
     let bio = new PIXI.Text(character.bio, this.h1long)
     bio.x = 20
     bio.y = 50
+    bio.style.lineHeight = 15
     this.bioContainer.addChild(bio)
 
     this.stage.addChild(this.bioContainer)
@@ -122,6 +123,7 @@ class CharacterInfo extends GameObject {
     let dialog = new PIXI.Text(character.dialog, this.h1)
     dialog.x = 120
     dialog.y = 20
+    dialog.style.lineHeight = 15
     this.dialogContainer.addChild(dialog)
 
     this.stage.addChild(this.dialogContainer)
