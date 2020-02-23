@@ -24,7 +24,7 @@ class LevelScene extends Scene {
     this.cave = new LevelCave(this.gameScene.characters, app.sprites["cave_ceiling"], app.sprites["floor"])
     this.stage.addChild(this.cave.stage)
 
-    this.ui = new LevelUI(this.gameScene.characters, this)
+    this.ui = new LevelUI(this.gameScene.characters, this, app)
     this.stage.addChild(this.ui.stage)
     this.UI.push(this.ui)
   }
@@ -64,9 +64,12 @@ class LevelCave extends GameObject {
 }
 
 class LevelUI extends Scene {
-  constructor(characters, scene){
+  constructor(characters, scene, app){
     super({UI: [], gameObjects: []})
     this.gameScene = scene
+    console.log("APP!")
+    console.log(app)
+    this.app = app
 
     this.stage.width = 480
     this.stage.height = 320
@@ -83,17 +86,26 @@ class LevelUI extends Scene {
 
     this.charInfo = new CharacterInfo(characters, this, "Necromancer")
     this.stage.addChild(this.charInfo.stage)
+    this.UI.push(this.charInfo)
   }
 
   volunteer(){
     console.log("volunteering")
   }
 
-  changeCharacter(pos){
-
+  changeDisplay(key){
+    switch(key){
+      case 49:
+      case 50:
+      case 51:
+      case 52:
+      case 53: 
+      case 79:
+        console.log("sending an event")
+        /* one of the characters or obstacle were clicked */
+        this.app.eventBuffer.push({type: "switchInfo", key: key})
+      break;
+    }
   }
 
-  showObstacle(){
-
-  }
 }
