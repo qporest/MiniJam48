@@ -31,30 +31,42 @@ class GameScene extends Scene {
         this.sceneTracker,
         app.sprites["necromancer"], 
         {
-          necromancy: true
+          necromancy: true,
+          soul:       false
         }
       ),
       "Fox": new Character(
         "Fox",
         this.sceneTracker,
-        app.sprites["fox"], 
+        app.sprites["fox"],
+        {
+          skinny: true,
+          thumbs: false
+        } 
       ),
       "Elf": new Character(
         "Elf",
         this.sceneTracker,
-        app.sprites["elf"], 
+        app.sprites["elf"],
+        {
+          skinny: true
+        }
       ),
       "Cleric": new Character(
         "Cleric", 
         this.sceneTracker,
-        app.sprites["cleric"], 
+        app.sprites["cleric"],
+        {
+          healing: true
+        }
       ),
       "Dwarf": new Character(
         "Dwarf",
         this.sceneTracker,  
         app.sprites["dwarf"],
         {
-          dwarf: true
+          dwarf:  true,
+          strong: true
         }
       )
     }
@@ -102,6 +114,7 @@ class SceneTracker {
     this.initDB()
     this.script = {
       "0": {
+        // pulley / lever
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["0"]["description"]
           }, 
@@ -109,6 +122,7 @@ class SceneTracker {
         ),
         next: 1
       },
+      // magic Door
       "1": {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["1"]["description"]
@@ -120,10 +134,24 @@ class SceneTracker {
         next: 2
       },
       "2": {
+        // hungry guard
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["2"]["description"]
           }, 
           this.db["obstacles"]["2"]["preCheckFailure"],
+          true
+        ),
+        postCheck: function(char, chars){
+          return !char.params.skinny
+        },
+        next: "3"
+      },
+      "3": {
+        // road fork
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["3"]["description"]
+          }, 
+          this.db["obstacles"]["3"]["preCheckFailure"],
           false
         ),
         preCheck: function(chars){
@@ -138,7 +166,7 @@ class SceneTracker {
           return true
         },
         postCheck: function(char, chars){
-          if(Object.values(chars).filter(x=>x.params.dwarf).length == 0){
+          if(!char.params.dwarf){
             if(Math.floor(Math.random()*100)<33){
               return true
             } else {
@@ -146,6 +174,58 @@ class SceneTracker {
             }
           }
           return true
+        },
+        next: "4"
+      },
+      "4": {
+        // soul pit
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["4"]["description"]
+          }, 
+          this.db["obstacles"]["4"]["preCheckFailure"],
+          true
+        ),
+        postCheck: function(char, chars){
+          return char.params.soul
+        },
+        next: "5"
+      },
+      "5": {
+        // big boulder
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["5"]["description"]
+          }, 
+          this.db["obstacles"]["5"]["preCheckFailure"],
+          false
+        ),
+        postCheck: function(char, chars){
+          return char.params.strong
+        },
+        next: "6"
+      },
+      "6": {
+        // gas
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["6"]["description"]
+          }, 
+          this.db["obstacles"]["6"]["preCheckFailure"],
+          true
+        ),
+        preCheck: function(chars){
+          return Object.values(chars).filter(x=>x.params.healing).length > 0
+        },
+        next: "7"
+      },
+      "7": {
+        // door to exit
+        scene: new LevelScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["7"]["description"]
+          }, 
+          this.db["obstacles"]["7"]["preCheckFailure"],
+          true
+        ),
+        postCheck: function(char, chars){
+          return char.params.thumbs
         },
         next: "final"
       },
@@ -405,27 +485,27 @@ class SceneTracker {
           preCheckFailure: ""
         },
         "2": {
-          description: "",
+          description: "hungry monstah",
           preCheckFailure: ""
         },
         "3": {
-          description: "",
+          description: "fork",
           preCheckFailure: ""
         },
         "4": {
-          description: "",
+          description: "pit",
           preCheckFailure: ""
         },
         "5": {
-          description: "",
+          description: "boulder",
           preCheckFailure: ""
         },
         "6": {
-          description: "",
+          description: "antidote",
           preCheckFailure: ""
         },
         "7": {
-          description: "",
+          description: "door",
           preCheckFailure: ""          
         }
       }

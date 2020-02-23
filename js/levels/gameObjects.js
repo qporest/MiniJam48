@@ -121,10 +121,11 @@ class Character extends GameObject {
 		
 		this.params.thumbs     = params.thumbs     || true
 		this.params.necromancy = params.necromancy || false
-		this.params.strength   = params.strength   || false
+		this.params.strong     = params.strong     || false
 		this.params.dwarf      = params.dwarf      || false
-		this.params.antidote   = params.antidote   || false
+		this.params.healing    = params.healing    || false
 		this.params.skinny     = params.skinny     || false
+		this.params.soul       = params.soul       || true
 
 		this.updatePosition()
 	}
