@@ -199,7 +199,8 @@ class SceneTracker {
       "4": {
         // soul pit
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["4"]["description"]
+            text: this.db["obstacles"]["4"]["description"],
+            sprite: this.app.sprites["soulpit"]
           }, 
           this.db["obstacles"]["4"]["preCheckFailure"],
           true
