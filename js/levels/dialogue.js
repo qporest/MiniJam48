@@ -118,14 +118,16 @@ class TutorialCutScene extends CutScene {
   }
 }
 
-class TeamTutorial extends CutScene {
+class ClickTutorialScene extends CutScene {
   init(app){
     super.init(app)
     this.textObject.x = this.WIDTH/2 - this.textObject.width/2
-    this.textObject.y = 100
+    this.textObject.y = 20
 
-    let cleric = this.app.sprites["cleric"]
-
-    this.dialogue.addChild(this.textObject)
+    let img = this.app.sprites["tutorial"]
+    img.x = this.WIDTH/2 - img.width/2
+    img.y = 300
+    img.anchor.set(0, 1)
+    this.dialogue.addChild(img)
   }
 }

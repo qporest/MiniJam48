@@ -117,7 +117,7 @@ class SceneTracker {
     this.initDB()
     this.script = {
       "tutorial":{
-        scene: new TutorialCutScene(this.db["tutorial"]["0"], this),
+        scene: new ClickTutorialScene(this.db["tutorial"]["0"], this),
         tutorial: true,
         next: "story1",
       },
@@ -581,7 +581,7 @@ class SceneTracker {
         "1": "Cleric felt something was wrong before it happened."
       },
       "tutorial": {
-        "0": "Help your team succeed by helping them make tough decisions.\n"
+        "0": "You can both click/tap the buttons on the screen as well as press the character between square brackets.\nFor example, [3] can be clicked or pressed on keyboard"
       },
       "end": "You won! Tell the tale of your adventures. Praise those who sacrificed themselves for the good of the team."
     }

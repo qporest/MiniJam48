@@ -58,7 +58,7 @@ class MenuScene extends Scene {
     this.stage.addChild(creditsButton.sprite)
     this.UI.push(creditsButton)
 
-    let text = `Welcome to the game.\nTo interact with the game press the key in square brackets or click/touch on the button above.`
+    let text = `Help adventurers make it out alive from the haunted cave. They will rely on you to help them make tough decisions.`
     let textStyle = new PIXI.TextStyle({
       fontFamily: "arcade",
       fontSize: 16,
