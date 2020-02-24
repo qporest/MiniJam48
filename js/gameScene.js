@@ -28,8 +28,8 @@ class GameScene extends Scene {
       "Necromancer": new Character(
         "Necromancer",
         this.sceneTracker,
-        app.sprites["necromancer"], 
-        app.sprites["necromancerIcon"], 
+        app.sprites["necromancer"],
+        app.sprites["necromancerIcon"],
         {
           necromancy: true,
           soul:       false
@@ -42,7 +42,7 @@ class GameScene extends Scene {
         app.sprites["foxIcon"],
         {
           thumbs: false
-        } 
+        }
       ),
       "Elf": new Character(
         "Elf",
@@ -54,7 +54,7 @@ class GameScene extends Scene {
         }
       ),
       "Cleric": new Character(
-        "Cleric", 
+        "Cleric",
         this.sceneTracker,
         app.sprites["cleric"],
         app.sprites["clericIcon"],
@@ -65,7 +65,7 @@ class GameScene extends Scene {
       ),
       "Dwarf": new Character(
         "Dwarf",
-        this.sceneTracker,  
+        this.sceneTracker,
         app.sprites["dwarf"],
         app.sprites["dwarfIcon"],
         {
@@ -170,7 +170,7 @@ class SceneTracker {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["0"]["description"],
             sprite: this.app.sprites["pulley"]
-          }, 
+          },
           this.db["obstacles"]["0"]["preCheckFailure"]
         ),
         next: 1
@@ -180,7 +180,7 @@ class SceneTracker {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["1"]["description"],
             sprite: this.app.sprites["magicdoor"]
-          }, 
+          },
           this.db["obstacles"]["1"]["preCheckFailure"],
           false
         ),
@@ -192,7 +192,7 @@ class SceneTracker {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["2"]["description"],
             sprite: this.app.sprites["monster"]
-          }, 
+          },
           this.db["obstacles"]["2"]["preCheckFailure"],
           true
         ),
@@ -206,7 +206,7 @@ class SceneTracker {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["3"]["description"],
             sprite: this.app.sprites["fork"]
-          }, 
+          },
           this.db["obstacles"]["3"]["preCheckFailure"],
           false
         ),
@@ -238,7 +238,7 @@ class SceneTracker {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["4"]["description"],
             sprite: this.app.sprites["soulpit"]
-          }, 
+          },
           this.db["obstacles"]["4"]["preCheckFailure"],
           true
         ),
@@ -252,7 +252,7 @@ class SceneTracker {
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["5"]["description"],
             sprite: this.app.sprites["boulder"]
-          }, 
+          },
           this.db["obstacles"]["5"]["preCheckFailure"],
           false
         ),
@@ -266,7 +266,7 @@ class SceneTracker {
         scene: new ToxicGasScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["6"]["description"],
             sprite: this.app.sprites["toxicgas"]
-          }, 
+          },
           this.db["obstacles"]["6"]["preCheckFailure"],
           true
         ),
@@ -279,7 +279,7 @@ class SceneTracker {
         // door to exit
         scene: new LevelScene(this.gameScene, undefined, {
             text: this.db["obstacles"]["7"]["description"]
-          }, 
+          },
           this.db["obstacles"]["7"]["preCheckFailure"],
           true
         ),
@@ -395,7 +395,7 @@ class SceneTracker {
         },
         "7": {
           thinking: "",
-          sacrifice: ""          
+          sacrifice: ""
         }
       },
       "Fox": {
@@ -439,7 +439,7 @@ class SceneTracker {
         },
         "7": {
           thinking: "",
-          sacrifice: ""          
+          sacrifice: ""
         }
       },
       "Cleric": {
@@ -483,7 +483,7 @@ class SceneTracker {
         },
         "7": {
           thinking: "",
-          sacrifice: ""          
+          sacrifice: ""
         }
       },
       "Dwarf": {
@@ -528,7 +528,7 @@ class SceneTracker {
         },
         "7": {
           thinking: "",
-          sacrifice: ""          
+          sacrifice: ""
         }
       },
       "Elf": {
@@ -574,53 +574,92 @@ class SceneTracker {
         },
         "7": {
           thinking: "",
-          sacrifice: ""          
+          sacrifice: ""
         }
       },
       "obstacles": {
         "tutorial": {
           description: "tutorial",
-          preCheckFailure: ""  
+          preCheckFailure: ""
         },
         "0": {
-          description: "It's clear from the beginning - not everyone will make it out alive.\n" +
-          "You see a metal gate and a lever that opens it. It looks like someone might need to keep it open so others can pass.",
+          description: "The first thing the adventurers see is a door out of the chamber.\n" +
+          " \n" +
+          "But it appears that someone must stay behind to hold the pully as the rest of the team exits.\n" +
+          " \n" +
+          "From this moment, it's clear that not everyone will make it out alive.",
           preCheckFailure: ""
         },
         "1": {
-          description: `There's an insciption on the wall. It says "To pass without harm one must say the magical word - ", and then it stops.\n`+
-          "There's a skeleton below the insciption, still holding his masonry tools - bound to forever work on the writing and never finish it.",
+          description: "Although saddened by the generous sacrifice of their fellow teammate, the group quickly move onto the next part of the cave.\n" +
+          " \n" +
+          "Unfortuneately, the adventurers come across another door...except this time it's sealed by magic...\n" +
+          " \n" +
+          `However, there's an insciption on the wall. It says "To pass without harm one must say the magical word FRI... ", and then it stops.\n`+
+          " \n" +
+          "There's a skeleton below the insciption, still holding his masonry tools - never to finish the work he started.",
           preCheckFailure: ""
         },
         "2": {
-          description: "hungry monstah",
+          description: "The group smells a terrible odor as they continue to walk.\n" +
+          " \n" +
+          "The team realizes what the smell is...OGRE!! EW!!\n" +
+          " \n" +
+          "The ogre approaches as he chuckles and salivates at the sight of a possible snack.\n" +
+          " \n" +
+          `"Oh, this is perfect! I was looking for another snack. Just let me eat one of you and I'll let the rest of you pass, HAH! But just so you know, I don't eat women or children...I'm a gentleman at heart."`,
           preCheckFailure: ""
         },
         "3": {
-          description: "fork",
+          description: "As the group tries to forget the choice they've just made, the shrieks of THE SHADOW sound incredibly close.\n" +
+          " \n" +
+          "The group grows anxious.\n" +
+          " \n" +
+          "OH NO!! Three tunnels appear before the group and they must decide which tunnel to take!\n" +
+          " \n" +
+          "There are labels above each tunnel, and the group recognizes it as Dwarvish.",
           preCheckFailure: ""
         },
         "4": {
-          description: "pit",
+          description: "Although the group is emotionally exhausted by the choices they've made, they quickly press on to escape the THE SHADOW.\n" +
+          " \n" +
+          `Suddenly, a shadowy figure appears before them!! "THE SHADOW!!" everyone screams."\n` +
+          " \n" +
+          "Upon closer inspection, the group realizes that it's just the Grim Reaper.\n" +
+          " \n" +
+          `"Sorry, didn't mean to spook you all, but I'm in a bit of a pinch. I didn't make my quota for the day and I was hopeing you guys could help. I just need one soul of a living creature."`,
           preCheckFailure: ""
         },
         "5": {
-          description: "boulder",
+          description: "The shrieks of THE SHADOW become faint as the three continue on.\n" +
+          " \n" +
+          "They come across a door, but it's blocked by a large boulder.\n" +
+          " \n" +
+          "The boulder rests peacefully as it nestles cozily against the door.",
           preCheckFailure: ""
         },
         "6": {
-          description: "antidote",
-          preCheckFailure: ""
+          description: "The remaining pair walk towards the next part of the cave and they starts to notice a haze start to form around them.\n" +
+          " \n" +
+          "At first, neither think much of it. However, as they continued on, the haze became thick and the two began to feel incredibly sluggish and ill.\n" +
+          " \n" +
+          "The shrieks of THE SHADOW grow near.",
+          preCheckFailure: "Your team doesn't have an antidote, so the toxic gas quickly kills everyone remaining on your team"
         },
         "7": {
           description: "door",
-          preCheckFailure: ""          
+          preCheckFailure: ""
         }
       },
       "lore": {
-        "0": "A band of explorers were going after their biggest treasure yet. They walked through the abandoned mining shaft which morphed into "+
-        "unexplored network of caves. And alas here it was - their final prize.",
-        "1": "Cleric felt something was wrong before it happened."
+        "0": "A group of adventurers were hunting their biggest treasure yet.",
+        "1": "They walked through an abandoned mining shaft which morphed into an unexplored network of caves.",
+        "2": "And alas, there it was - the Chest of Faquad. A chest known to be filled with unimaginable treasure.",
+        "3": "The Cleric felt something was wrong...",
+        "4": "However, the team ignored her worries and decided to open the chest.",
+        "5": `MUAHAHAHAHAHAHAHAHA, YOU SILLY LITTLE FOOLS. YOU'VE JUST REALEASED ME FROM CAPTIVITY.`,
+        "6": "The group had unknowingly unleased THE SHADOW, a ruthless creature that feeds on any lifeform is comes across.",
+        "7": "Panicked, the adventurers run as fast as they can to find the exit from the treasure chamber.",
       },
       "tutorial": {
         "0": "You can both click/tap the buttons on the screen as well as press the character between square brackets.\nFor example, [3] can be clicked or pressed on keyboard"
