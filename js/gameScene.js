@@ -359,7 +359,7 @@ class SceneTracker {
           sacrifice: ""
         },
         "info":{
-          bio: "This is a test fake bio. As fake as it gets tbh",
+          bio: "",
           role: "Race:orc   class:necromancer",
           pos: 0
         },
@@ -434,8 +434,8 @@ class SceneTracker {
           fail: "Fox was cut loose, but unable to understand what she needs to do she climbed the boulder and was scared to jump down. She sat there until the darkness came."
         },
         "6": {
-          thinking: "Fox was alarmed and coughing. The sensory overload from the smell and colors",
-          sacrifice: ""
+          thinking: "Fox was alarmed and coughing. The sensory overload from the smell and colors.",
+          sacrifice: "Cleric sat next to Fox and was calming her down. Being pet by her best friend, Fox started drifting away, tail wiggling slower and slower."
         },
         "7": {
           thinking: "",
@@ -478,11 +478,11 @@ class SceneTracker {
           fail: "Cleric tried using his staff to pry the boulder often, but it broke together with his confidence in divine power. Shadow approached and he embraced it."
         },
         "6": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "I'm ready to end it. I've lost my belief in the divine, but I still believe is saving others.",
+          sacrifice: "Cleric took out the antidote, said goodbye and started walking towards the shadow."
         },
         "7": {
-          thinking: "",
+          thinking: "I will live on to tell the tale of these people. That might be my new purpose.",
           sacrifice: ""
         }
       },
@@ -523,11 +523,11 @@ class SceneTracker {
           fail: ""
         },
         "6": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "I can't accept this sacrifice from Cleric. I can't have him die legendary death before me.",
+          sacrifice: "Dwarf grabbed the antidote and stuck it into Cleric's hand. He hugged him and then laughing like a maniac picked up his axe and ran towards the shadow"
         },
         "7": {
-          thinking: "",
+          thinking: "I'm glad I have strong thumbs to open this door. Would have been a waste of these sacrifices.",
           sacrifice: ""
         }
       },
@@ -569,7 +569,7 @@ class SceneTracker {
           sacrifice: "Princess put a handkerchief on the rock to push it and gave it her best. There was no effect except the group suppressing their laughter. Group's wasted time wasn't wasted by the darkness."
         },
         "6": {
-          thinking: "",
+          thinking: "If you see this message, please leave a comment. It's a bug, this shouldn't happen",
           sacrifice: ""
         },
         "7": {
