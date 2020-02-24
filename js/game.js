@@ -13,7 +13,8 @@ class EscapeGame extends Game {
 		this.scenes = {
 			preload: new InitScene(),
 			game: new GameScene(),
-			menu: new MenuScene()
+			menu: new MenuScene(),
+			credits: new CreditScene()
 		}
 		this.changeScene("preload")
 	}

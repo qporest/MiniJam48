@@ -1,4 +1,4 @@
-class MenuScene extends Scene {
+class CreditScene extends Scene {
   constructor(obj = {
     UI: [],
     gameObjects: []
@@ -17,48 +17,30 @@ class MenuScene extends Scene {
     this.stage.x = this.app.canvas.width/2 - this.WIDTH/2
     this.stage.y = this.app.canvas.height/2 - this.HEIGHT/2
     this.dialogue = new PIXI.Graphics()
-    this.dialogue.beginFill(0x000000)
+    this.dialogue.beginFill(0x39003d)
     this.dialogue.drawRect(0, 0, this.WIDTH, this.HEIGHT)
     this.dialogue.endFill();
     this.stage.addChild(this.dialogue)
 
-    let startButton = new TextKeyAndSpriteButton(`[S]tart`, 
+    let button = new TextKeyAndSpriteButton(`[M]enu`, 
       (key)=>{
-        this.startGame.bind(this)()
-      }, 83,
+        this.startMenu.bind(this)()
+      }, 77,
       {
         color: "#FFFFFF",
         hexColor: 0xFFFFFF,
-        width: 180,
-        height: 36,
-        fontSize: 18
+        width: 150,
+        height: 30,
+        fontSize: 20
       }
     )
-    startButton.sprite.x = 80 - startButton.width/2
-    startButton.sprite.y = 50
+    button.sprite.x = this.WIDTH/2 - button.width/2
+    button.sprite.y = 350
 
-    this.stage.addChild(startButton.sprite)
-    this.UI.push(startButton)
+    this.stage.addChild(button.sprite)
+    this.UI.push(button)
 
-    let creditsButton = new TextKeyAndSpriteButton(`[C]redits`, 
-      (key)=>{
-        this.showCredits.bind(this)()
-      }, 67,
-      {
-        color: "#FFFFFF",
-        hexColor: 0xFFFFFF,
-        width: 180,
-        height: 36,
-        fontSize: 18
-      }
-    )
-    creditsButton.sprite.x = 320 - creditsButton.width/2
-    creditsButton.sprite.y = 50
-
-    this.stage.addChild(creditsButton.sprite)
-    this.UI.push(creditsButton)
-
-    let text = `Welcome to the game.\nTo interact with the game press the key in square brackets or click/touch on the button above.`
+    let text = `This game was created in 48 hours for MiniJam 48 by:`
     let textStyle = new PIXI.TextStyle({
       fontFamily: "arcade",
       fontSize: 16,
@@ -70,17 +52,34 @@ class MenuScene extends Scene {
     })
     this.textObject = new PIXI.Text(text, textStyle)
     this.textObject.x = this.WIDTH/2 - this.textObject.width/2
-    this.textObject.y = 120
+    this.textObject.y = 80
     this.textObject.style.lineHeight = 16
     this.dialogue.addChild(this.textObject)
+
+    let fox = this.app.sprites["fox"]
+    fox.x = 100 - fox.width/2
+    fox.y = 240
+    fox.anchor.set(0, 1)
+    this.dialogue.addChild(fox)
+    let eunip = new PIXI.Text("@euni.p", textStyle)
+    eunip.x = 100 - eunip.width/2
+    eunip.y = 260
+    this.dialogue.addChild(eunip)
+  
+
+    let death = this.app.sprites["soulpit"]
+    death.x = 300 - death.width/2
+    death.y = 240
+    death.anchor.set(0, 1)
+    this.dialogue.addChild(death)
+    let qporest = new PIXI.Text("@qporest", textStyle)
+    qporest.x = 300 - qporest.width/2
+    qporest.y = 260
+    this.dialogue.addChild(qporest)
   }
 
-  showCredits(){
-    this.app.changeScene("credits")
-  }
-
-  startGame(){
-    this.app.changeScene("game")
+  startMenu(){
+    this.app.changeScene("menu")
   }
 
   setDialogue({icon, text}){

@@ -139,7 +139,7 @@ class LevelCave extends GameObject {
     if(obstacle){
       obstacle.x = 340
       obstacle.y = 160
-      obstacle.pivot.set(0, obstacle.height)
+      obstacle.anchor.set(0, 1)
       this.stage.addChild(obstacle)
     }
 
