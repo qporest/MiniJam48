@@ -117,3 +117,15 @@ class TutorialCutScene extends CutScene {
     }
   }
 }
+
+class TeamTutorial extends CutScene {
+  init(app){
+    super.init(app)
+    this.textObject.x = this.WIDTH/2 - this.textObject.width/2
+    this.textObject.y = 100
+
+    let cleric = this.app.sprites["cleric"]
+
+    this.dialogue.addChild(this.textObject)
+  }
+}
