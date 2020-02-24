@@ -359,7 +359,7 @@ class SceneTracker {
           sacrifice: ""
         },
         "info":{
-          bio: "",
+          bio: "Necromancer feared little. Working so closely with death - raising and controlling undead - he grew to be cold, cynical, and ruthless. Adventure to the scarriest place of all is a chance to feel something.",
           role: "Race:orc   class:necromancer",
           pos: 0
         },
@@ -404,7 +404,7 @@ class SceneTracker {
           sacrifice: ""
         },
         "info":{
-          bio: "This is a test fake bio. As fake as it gets tbh",
+          bio: "Fox had been adopted by Cleric many years ago. Trusted companion he helps with hunting and navigating.",
           role:"Race:fox    class:k9",
           pos: 4
         },
@@ -448,7 +448,7 @@ class SceneTracker {
           sacrifice: ""
         },
         "info":{
-          bio: "This is a test fake bio. As fake as it gets tbh",
+          bio: "Cleric embarked on this adventure fueled by his beliefs in the divine, and hoping to find ancient artifacts. He is familiar with medicine and sciences.",
           role:"Race:human  class:cleric",
           pos: 2
         },
@@ -492,7 +492,7 @@ class SceneTracker {
           sacrifice: ""
         },
         "info":{
-          bio: "This is a test fake bio. As fake as it gets tbh",
+          bio: "There isn't a better place to die with glory or get eternal fame than this expedition. Dwarf is strong, brave, and willing to do anything to one-up elfs.",
           role:"Race:dwarf  class:warrior",
           pos: 3,
         },
@@ -537,7 +537,7 @@ class SceneTracker {
           sacrifice: ""
         },
         "info":{
-          bio: "This is a test fake bio. As fake as it gets tbh",
+          bio: "A rebellious princesses she embarked on this journey confident in her magical skills. She soon found that being rebellious in the castle doesn't really mean dangerous and now she is hoping to get back home.",
           role:"Race:elf    class:royalty",
           pos: 1
         },

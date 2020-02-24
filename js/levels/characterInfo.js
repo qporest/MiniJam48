@@ -85,7 +85,7 @@ class CharacterInfo extends GameObject {
 
     let bio = new PIXI.Text(character.bio, this.h1long)
     bio.x = 20
-    bio.y = 50
+    bio.y = 40
     bio.style.lineHeight = 15
     this.bioContainer.addChild(bio)
 
