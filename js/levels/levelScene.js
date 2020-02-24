@@ -104,12 +104,13 @@ class LevelScene extends Scene {
   }
 
   processEvt(evt){
-    console.log("Got an event!!")
+    console.log(evt)
     super.processEvt(evt)
     if(evt.type==="showLevelDialog"){
       this.displayDialog({text: evt.text})
       evt.processed = true
     } else if (evt.type == "gameOver"){
+      evt.processed = true
       this.gameScene.sceneTracker.gameOver()
     }
   }

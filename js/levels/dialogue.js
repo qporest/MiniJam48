@@ -25,6 +25,16 @@ class DialogueScene extends Scene {
     this.dialogue.drawRect(0, 0, this.WIDTH, this.HEIGHT)
     this.dialogue.endFill();
     this.stage.addChild(this.dialogue)
+
+    this.textStyle = new PIXI.TextStyle({
+      fontFamily: "arcade",
+      fontSize: 18,
+      fill: "#FFFFFF",
+      stroke: "white",
+      strokeThickness: 0,
+      wordWrap: true,
+      wordWrapWidth: 380
+    })
   }
 
   setDialogue({icon, text}){
@@ -43,17 +53,8 @@ class DialogueScene extends Scene {
     border.y = 5
     this.dialogue.addChild(border)
 
-    let textStyle = new PIXI.TextStyle({
-      fontFamily: "arcade",
-      fontSize: 18,
-      fill: "#FFFFFF",
-      stroke: "white",
-      strokeThickness: 0,
-      wordWrap: true,
-      wordWrapWidth: 380
-    })
-    this.textObject = new PIXI.Text(text, textStyle)
-    this.textObject.x = 10
+    this.textObject = new PIXI.Text(text, this.textStyle)
+    this.textObject.x = this.WIDTH/2 - this.textObject.width/2
     this.textObject.y = this.HEIGHT/2 - this.textObject.height/2
     this.textObject.style.lineHeight = 22
     this.dialogue.addChild(this.textObject)
@@ -93,7 +94,9 @@ class CutScene extends DialogueScene {
 
   init(app){
     super.init(app)
-    this.setDialogue(this.text)
+    this.setDialogue({text: this.text})
+    this.textObject.x = this.WIDTH/2 - this.textObject.width/2
+    this.textObject.y = this.HEIGHT/2 - this.textObject.height/2
   }
 
   processEvt(evt) {
@@ -109,7 +112,6 @@ class CutScene extends DialogueScene {
 class TutorialCutScene extends CutScene {
   init(app){
     super.init(app)
-    this.setDialogue(this.text)
     if(!this.app.firstTime){
       this.sceneTracker.nextScene()
     }

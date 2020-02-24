@@ -96,6 +96,7 @@ class Game {
     if (this.debug > 2) {
       console.log("Changing scene to " + scene.toString())
     }
+    this.eventBuffer = []
     this.pushScene(this.scenes[scene])
     this.currentScene.init(this)
   }

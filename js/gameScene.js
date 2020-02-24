@@ -13,7 +13,7 @@ class GameScene extends Scene {
     super.init(app)
     this.app = app
     //this.scriptSystem = new ScriptSystem(this)
-
+    console.log("Initializing game")
     this.sceneTracker = new SceneTracker(this, app)
     this.script = this.sceneTracker.script
     this.currentSong = null
@@ -100,6 +100,9 @@ class GameScene extends Scene {
   }
 
   gameFinished(){
+    this.app.firstTime = false
+    this.app.firstTime = false
+    this.app.changeScene("menu")
     console.log("You got to the end? Really?")
   }
 
@@ -114,7 +117,17 @@ class SceneTracker {
     this.initDB()
     this.script = {
       "tutorial":{
-        scene: new TutorialCutScene("Hello there tutorial", this),
+        scene: new TutorialCutScene(this.db["tutorial"]["0"], this),
+        tutorial: true,
+        next: "story1",
+      },
+      "story1":{
+        scene: new TutorialCutScene(this.db["lore"]["0"], this),
+        next: "story2",
+        tutorial: true
+      },
+      "story2":{
+        scene: new TutorialCutScene(this.db["lore"]["1"], this),
         next: "0",
         tutorial: true
       },
@@ -235,6 +248,11 @@ class SceneTracker {
         postCheck: function(char, chars){
           return char.params.thumbs
         },
+        next: "8"
+      },
+      "8": {
+        // final message
+        scene: new CutScene(this.db["end"], this),
         next: "final"
       },
     }
@@ -260,8 +278,8 @@ class SceneTracker {
     this.app.eventBuffer.push({
       type: "nextScene"
     })
-    this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
     this.app.pushScene(this.script[this.currentScene]["scene"])
+    this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
   }
 
   setSceneN(num){
@@ -270,12 +288,17 @@ class SceneTracker {
     })
     this.app.popScene()
     this.currentScene = num
-    this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
     this.app.pushScene(this.script[this.currentScene]["scene"])
+    this.script[this.currentScene]["scene"].init(this.app, this.script[this.currentScene]["preCheck"], this.script[this.currentScene]["postCheck"])
   }
 
   gameOver(){
-    this.app.popScene()
+    this.app.firstTime = false
+    this.app.changeScene("menu")
+  }
+
+  skipScene(){
+
   }
 
   nextScene(){
@@ -550,7 +573,16 @@ class SceneTracker {
           description: "door",
           preCheckFailure: ""          
         }
-      }
+      },
+      "lore": {
+        "0": "A band of explorers were going after their biggest treasure yet. They walked through the abandoned mining shaft which morphed into "+
+        "unexplored network of caves. And alas here it was - their final prize.",
+        "1": "Cleric felt something was wrong before it happened."
+      },
+      "tutorial": {
+        "0": "Help your team succeed by helping them make tough decisions.\n"
+      },
+      "end": "You won! Tell the tale of your adventures. Praise those who sacrificed themselves for the good of the team."
     }
 
   }
