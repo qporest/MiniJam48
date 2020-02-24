@@ -41,7 +41,6 @@ class GameScene extends Scene {
         app.sprites["fox"],
         app.sprites["foxIcon"],
         {
-          skinny: true,
           thumbs: false
         } 
       ),
@@ -60,7 +59,8 @@ class GameScene extends Scene {
         app.sprites["cleric"],
         app.sprites["clericIcon"],
         {
-          healing: true
+          healing: true,
+          skinny: true
         }
       ),
       "Dwarf": new Character(
@@ -123,15 +123,45 @@ class SceneTracker {
       "tutorial":{
         scene: new ClickTutorialScene(this.db["tutorial"]["0"], this),
         tutorial: true,
+        next: "story0",
+      },
+      "story0":{
+        scene: new TutorialCutScene(this.db["lore"]["0"], this),
         next: "story1",
+        tutorial: true
       },
       "story1":{
-        scene: new TutorialCutScene(this.db["lore"]["0"], this),
+        scene: new TutorialCutScene(this.db["lore"]["1"], this),
         next: "story2",
         tutorial: true
       },
       "story2":{
-        scene: new TutorialCutScene(this.db["lore"]["1"], this),
+        scene: new TutorialCutScene(this.db["lore"]["2"], this),
+        next: "story3",
+        tutorial: true
+      },
+      "story3":{
+        scene: new TutorialCutScene(this.db["lore"]["3"], this),
+        next: "story4",
+        tutorial: true
+      },
+      "story4":{
+        scene: new TutorialCutScene(this.db["lore"]["4"], this),
+        next: "story5",
+        tutorial: true
+      },
+      "story5":{
+        scene: new TutorialCutScene(this.db["lore"]["5"], this),
+        next: "story6",
+        tutorial: true
+      },
+      "story6":{
+        scene: new TutorialCutScene(this.db["lore"]["6"], this),
+        next: "story7",
+        tutorial: true
+      },
+      "story7":{
+        scene: new TutorialCutScene(this.db["lore"]["7"], this),
         next: "0",
         tutorial: true
       },
@@ -184,7 +214,7 @@ class SceneTracker {
           if(Object.values(chars).filter(x=>x.params.dwarf).length == 0){
             console.log("Dwarf text event")
             this.ui.obstacleInfo.displayInfo(this.ui.obstacleInfo.text + "\n"+
-            "Unfortunately without dwarf our chances are 1 in 3 to pick the right door that's not a trap.")
+            "Unfortunately without dwarf group's chances are 1 in 3 to pick the right door that's not a trap.")
           } else {
             this.ui.obstacleInfo.displayInfo(this.ui.obstacleInfo.text + "\n"+
             "Fortunately dwarf remembers his native language, maybe we should let him take a lead on this.")
@@ -330,36 +360,38 @@ class SceneTracker {
         },
         "info":{
           bio: "This is a test fake bio. As fake as it gets tbh",
-          role: "Race:ogre   class:necromancer",
+          role: "Race:orc   class:necromancer",
           pos: 0
         },
         "0": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Staying here to hold this pulley won't be the worst thing. I'm not afraid of dying, I'm already dead.",
+          sacrifice: "Farewell, I wish you to not have to make more sacrifices. \n\nAlways feel free to come back and visit.You'll find my corpse as it'd be the only one not rotting."
         },
         "1": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "It might be too late for me to resurrect him, but I'd love to try. Just to spite cleric one more time.",
+          sacrifice: "",
+          fail: ""
         },
         "2": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Of course I'm not afraid to die! To be eaten by this horrendous creation... I just mean I'm technically already dead, so he might not like the taste.",
+          sacrifice: "Everyone felt relief when Necromancer volunteered. He truly was the bravest of them. Was it brave if he was already dead however or was it just polite?"
         },
         "3": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "I've never seen these runes. Dwarfish is one of the uglies things I've seen, and I reanimate dead corpses for living.",
+          fail: "Group followed Necromancers guess and wasted hours of time until they hit a dead end. There was no time to come back, darkness was getting closer."
         },
         "4": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Necromancer was blushing. No one even knew he was able to, but in the presense of his idol the Grim Reaper he was acting really nervously.",
+          sacrifice: "There was no way to discourage Necromancer. \"It would be my highest honor to finally die by your scythe\" he said and stepped forward.",
+          fail: "The Grim Reaper felt cheated. Necromancers don't have souls, and he didn't believe the group didn't know that. He decided to kill Necromancers and collect the souls of others."
         },
         "5": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "If only there were corpses around to animate and make them push it away. Maybe they are underground?",
+          fail: "Group waited and watched Necromancer try and lift the undead, but no corpses remained in these caves long enough. Especially because of the shadow that they saw approaching them through a tunnel."
         },
         "6": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "It would not hurt me to see Cleric die, but I can't see myself saved by him either.",
+          sacrifice: "It is not because I like you, but because I don't want to be saved by you. Good luck living and looking for your new life purpose."
         },
         "7": {
           thinking: "",
@@ -377,31 +409,32 @@ class SceneTracker {
           pos: 4
         },
         "0": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "*sniff* *sniff* - fox cheerfully runs around not understanding the gravity of the situation.",
+          sacrifice: "Fox holds the pulley given to it by masters just as it was taught. She's waiting eagerly for the pets it will get for being a good fox."
         },
         "1": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Fox salivates at the looks of these bones. Untouched skeleton has all the bones in place! Such variety, such prime condition.",
+          sacrifice: "",
+          fail: "The group watches Fox jump to the skeleton and disintigrate it in moments. There is no intention behind it and group comes to terms that it was the last decision of their lives."
         },
         "2": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "The ogre smelled familiar to Fox. He wanted to go smell his new friend, and couldn't understand why he was held back by the group.",
+          sacrifice: "The leash was released and Fox ran towards his new friend. Every member of the group shrugged when the cave was filled with the sound of squeling. They all lost a bit of respect for themselves."
         },
         "3": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Group hoped for Fox to smell the way forward, but Fox kept trying to run back and see the friend they left behind with Ogre.",
+          fail: "Group followed Fox into one of the caves. They walked for a long time until the proud Fox showed them another corpse at a dead-end. Darkness was getting close."
         },
         "4": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Grim Reaper frightened Fox. It had no smell, made no sound. Fox stood behind the group with its tail perched up squeling quietly.",
+          sacrifice: "Group pointed to the fox and that gesture was clear to it even through the inter-species barrier of understanding. It bunched up and laid down as Grim Reaper silently floated through the air."
         },
         "5": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Fox felt vibrations in the boulder and was running around the rock trying to smell what's on the other side.",
+          fail: "Fox was cut loose, but unable to understand what she needs to do she climbed the boulder and was scared to jump down. She sat there until the darkness came."
         },
         "6": {
-          thinking: "",
+          thinking: "Fox was alarmed and coughing. The sensory overload from the smell and colors",
           sacrifice: ""
         },
         "7": {
@@ -420,28 +453,29 @@ class SceneTracker {
           pos: 2
         },
         "0": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "I will accept whatever divine power sends my way. These souls are worth saving. Except the necromancer.",
+          sacrifice: "Cleric holds the pulley letting others leave. They see him gesturing cross symbol in their direction, and then upon himself."
         },
         "1": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Holy teachings rarely deal with the land of dead. It does seem like something Necromancer would be good at, but I can't suggest it.",
+          sacrifice: "",
+          fail: "Group watched cleric pray and call upon the holy powers to disable the magic barrier, but the reception didn't seem to be good in the cave."
         },
         "2": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Cleric kept thinking of Jonah - eaten by the whale and surving inside. It was giving him courage.",
+          fail: "Ogre refused to eat women, but he wasn't above killing them. Upset with the group for not following simple instructions he started a carnage."
         },
         "3": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "I feel the third door to be the right one. However if certainly incorrect door was revealed I would change my opinion to increase our chances.",
+          fail: "Cleric remembered seeing one of the symbols on the tombstone. He changed his opinion and tried to justify it by explaining Monty Hall problem to the group. This didn't stop until darkness arrived."
         },
         "4": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Actually seeing the Grim Reaper was a shock to cleric as it put all of his knowledge in question. Why not volunteer, what is the point now?",
+          sacrifice: "Cleric approached Grim Reaper who was grinning at the irony of the situation. Group watched them vanish in thin air and continued on."
         },
         "5": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "It is a big rock. Not really my area of expertise.",
+          fail: "Cleric tried using his staff to pry the boulder often, but it broke together with his confidence in divine power. Shadow approached and he embraced it."
         },
         "6": {
           thinking: "",
@@ -464,29 +498,29 @@ class SceneTracker {
         },
         "0": {
           thinking: "An opportunity for sacrifice? This early on? It's not a battle death, but a worthy sacrifice is still a ticket to Valhalla.",
-          sacrifice: "I hope you get to live. Mostly so that you get to tell the tale of my brave sacrifice! Also, please check that my lights are off at home. For the planet.",
+          sacrifice: "I hope you get to live. Mostly so that you get to tell the tale of my brave sacrifice! Pour out some ale for me if you ever visit Nimergard!",
           fail: "",
         },
         "1": {
-          thinking: "No wonder he couldn't finish his writing. Those masonry tools are so outdated, at least for dwarves ha-ha-ha.",
+          thinking: "No wonder he couldn't finish his writing. Those masonry tools are so outdated, no dwarf would use them ha-ha-ha.",
           sacrifice: "",
           fail: "Group placed their trust in dwarf due to his masonry experience. This had nothing to do with the magic door however, and they couldn't get out of the room before evil forces catching up to them."
         },
         "2": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Even though dying was acceptable to Dwarf, this was against him most basic beliefs. He won't give up without a fight, but won't back out either.",
+          sacrifice: "Ogre was salivating as the dwarf was approaching him. Dwarf did not display any emotions. He asked Ogre to let the group through first, as he didn't want people to see him in such finale."
         },
         "3": {
-          thinking: "",
+          thinking: "The insciption reads Death, Trap, and Safety. Which one shall we take?",
           sacrifice: ""
         },
         "4": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "I'm not afaid of dying, and Grim Reaper is the most honorable enemy to die fighting.",
+          sacrifice: "The group said their goodbyes to a cheerfull Dwarf. He approached Death and asked if he will go to Valhalla. Death asked \"what is Valhalla?\", before they both disappeared."
         },
         "5": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "This tiny rock is as much of a delay as a lost sausage in my beard. I'd like them to ask me to move it, they oughta know who's the strongest here.",
+          fail: ""
         },
         "6": {
           thinking: "",
@@ -508,8 +542,8 @@ class SceneTracker {
           pos: 1
         },
         "0": {
-          thinking: "That lever looks rusty. Royalty never shall touch rusty objects, but I can't lose face either, so whatever needs to be done.",
-          sacrifice: "Tell the tale to my kingdom, let them know that elvian princesses die with class."
+          thinking: "That pulley looks rusty. I don't want my clothing stained, especially if it's what I will wear for the rest of eternity.",
+          sacrifice: "Tell the tale to the people of my kingdom, let them know that elvian princesses die with class."
         },
         "1": {
           thinking: "I bet I can learn what this skeleton is thinking by practicing my method acting. Though it's kind of dirty over there.",
@@ -518,20 +552,21 @@ class SceneTracker {
             "This did not yield any results and the evil caught up with the group."
         },
         "2": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "It is rather unbecoming of royalty to die eaten by monsters. Can I get this monster to fall in love with me maybe?",
+          sacrifice: "",
+          fail: "Ogre refused to eat women, but he wasn't above killing them. Upset with the group for not following simple instructions he started a carnage."
         },
         "3": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "So common of dwarves to not consider others and push their language and culture onto others.",
+          fail: "Group followed princess's guess and wasted hours of time until they hit a dead end. There was no time to come back, darkness was getting closer."
         },
         "4": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "Dying by the hand of Grim Reaper is the more honorable than a casual palace backstabbing I suppose.",
+          sacrifice: "Princess walked to Grim Reaper like an equal. Even Death was a little impressed by the way she carried herself."
         },
         "5": {
-          thinking: "",
-          sacrifice: ""
+          thinking: "It's a large rock. I don't see how I can do anything without looking silly.",
+          sacrifice: "Princess put a handkerchief on the rock to push it and gave it her best. There was no effect except the group suppressing their laughter. Group's wasted time wasn't wasted by the darkness."
         },
         "6": {
           thinking: "",
