@@ -96,10 +96,11 @@ class Character extends GameObject {
 	CHAR_MARGIN=10
 	CHAR_WIDTH =48
 
-	constructor(name, script, sprite, params={}){
+	constructor(name, script, sprite, icon, params={}){
 		super()
 		this.sprite = sprite
 		this.script = script
+		this.icon = icon
 
 		this.name = name
 
@@ -109,6 +110,12 @@ class Character extends GameObject {
 		this.bio = charData.bio
 
 		this.dialog = this.script.getCharacterDialog(name)
+
+		if(this.icon.anchor){
+			this.icon.anchor.set(0, 0)
+		} else {
+			this.icon.pivot.set(0, 0)
+		}
 
 		if(this.sprite.anchor){
 			this.sprite.anchor.set(0, 1)

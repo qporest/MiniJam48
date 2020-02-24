@@ -108,7 +108,7 @@ class CharacterInfo extends GameObject {
     rect.y = 0
     this.dialogContainer.addChild(rect)
 
-    let icon = getRectangle(80, 80)
+    let icon = character.icon
     icon.x = 20
     icon.y = 20
     this.dialogContainer.addChild(icon)

@@ -12,7 +12,6 @@ class GameScene extends Scene {
   init(app){
     super.init(app)
     this.app = app
-    //this.scriptSystem = new ScriptSystem(this)
     console.log("Initializing game")
     this.sceneTracker = new SceneTracker(this, app)
     this.script = this.sceneTracker.script
@@ -30,6 +29,7 @@ class GameScene extends Scene {
         "Necromancer",
         this.sceneTracker,
         app.sprites["necromancer"], 
+        app.sprites["necromancerIcon"], 
         {
           necromancy: true,
           soul:       false
@@ -39,6 +39,7 @@ class GameScene extends Scene {
         "Fox",
         this.sceneTracker,
         app.sprites["fox"],
+        app.sprites["foxIcon"],
         {
           skinny: true,
           thumbs: false
@@ -48,6 +49,7 @@ class GameScene extends Scene {
         "Elf",
         this.sceneTracker,
         app.sprites["elf"],
+        app.sprites["elfIcon"],
         {
           skinny: true
         }
@@ -56,6 +58,7 @@ class GameScene extends Scene {
         "Cleric", 
         this.sceneTracker,
         app.sprites["cleric"],
+        app.sprites["clericIcon"],
         {
           healing: true
         }
@@ -64,6 +67,7 @@ class GameScene extends Scene {
         "Dwarf",
         this.sceneTracker,  
         app.sprites["dwarf"],
+        app.sprites["dwarfIcon"],
         {
           dwarf:  true,
           strong: true
@@ -156,7 +160,8 @@ class SceneTracker {
       "2": {
         // hungry guard
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["2"]["description"]
+            text: this.db["obstacles"]["2"]["description"],
+            sprite: this.app.sprites["monster"]
           }, 
           this.db["obstacles"]["2"]["preCheckFailure"],
           true
@@ -169,7 +174,8 @@ class SceneTracker {
       "3": {
         // road fork
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["3"]["description"]
+            text: this.db["obstacles"]["3"]["description"],
+            sprite: this.app.sprites["fork"]
           }, 
           this.db["obstacles"]["3"]["preCheckFailure"],
           false

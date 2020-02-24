@@ -61,7 +61,7 @@ class CreditScene extends Scene {
     fox.y = 240
     fox.anchor.set(0, 1)
     this.dialogue.addChild(fox)
-    let eunip = new PIXI.Text("@euni.p", textStyle)
+    let eunip = new PIXI.Text("@euni-p", textStyle)
     eunip.x = 100 - eunip.width/2
     eunip.y = 260
     this.dialogue.addChild(eunip)
