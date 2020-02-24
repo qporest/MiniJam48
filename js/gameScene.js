@@ -278,7 +278,8 @@ class SceneTracker {
       "7": {
         // door to exit
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["7"]["description"]
+            text: this.db["obstacles"]["7"]["description"],
+            sprite: this.app.sprites["door"]
           },
           this.db["obstacles"]["7"]["preCheckFailure"],
           true

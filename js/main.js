@@ -21,7 +21,8 @@ let game = new EscapeGame({
 		"./img/icons/dwarf.png",
 		"./img/icons/elf.png",
 		"./img/icons/cleric.png",
-		"./img/tutorial.png"
+		"./img/tutorial.png",
+		"./img/door.png"
 	],
 	sprite_mapping: {
 		'./img/floor.png': 'floor',
@@ -47,6 +48,7 @@ let game = new EscapeGame({
 		'./img/icons/Rupert.png': 'RupertIcon',
 		'./img/icons/Narrator.png': 'NarratorIcon',
 		'./img/tutorial.png': 'tutorial',
+		'./img/door.png': 'door',
 	}
 })
 game.run()
