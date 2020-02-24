@@ -134,7 +134,8 @@ class SceneTracker {
       "0": {
         // pulley / lever
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["0"]["description"]
+            text: this.db["obstacles"]["0"]["description"],
+            sprite: this.app.sprites["pulley"]
           }, 
           this.db["obstacles"]["0"]["preCheckFailure"]
         ),
