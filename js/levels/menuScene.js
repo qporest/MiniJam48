@@ -34,7 +34,7 @@ class MenuScene extends Scene {
         fontSize: 18
       }
     )
-    startButton.sprite.x = 80 - startButton.width/2
+    startButton.sprite.x = this.WIDTH/2 - startButton.width/2
     startButton.sprite.y = 50
 
     this.stage.addChild(startButton.sprite)
@@ -52,8 +52,8 @@ class MenuScene extends Scene {
         fontSize: 18
       }
     )
-    creditsButton.sprite.x = 320 - creditsButton.width/2
-    creditsButton.sprite.y = 50
+    creditsButton.sprite.x = this.WIDTH/2 - creditsButton.width/2
+    creditsButton.sprite.y = 350
 
     this.stage.addChild(creditsButton.sprite)
     this.UI.push(creditsButton)
