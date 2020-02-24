@@ -40,6 +40,16 @@ class MenuScene extends Scene {
     this.stage.addChild(startButton.sprite)
     this.UI.push(startButton)
 
+    let sprites = ["fox", "cleric", "elf", "dwarf", "necromancer"]
+    for(let i=0; i<sprites.length; i++){
+      let sprite = this.app.sprites[sprites[i]]
+      sprite.x = 20 + (48+20)*i
+      sprite.y = 320
+      sprite.anchor.set(0, 1)
+      this.dialogue.addChild(sprite)
+    }
+
+
     let creditsButton = new TextKeyAndSpriteButton(`[C]redits`, 
       (key)=>{
         this.showCredits.bind(this)()
