@@ -129,6 +129,7 @@ class Game {
   }
 
   processClickEvt(evt) {
+    window.focus()
     evt.preventDefault()
     console.log({x: evt.clientX-this.canvas.offsetLeft,
       y: evt.clientY-this.canvas.offsetTop})
