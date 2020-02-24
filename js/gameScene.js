@@ -647,7 +647,11 @@ class SceneTracker {
           preCheckFailure: "Your team doesn't have an antidote, so the toxic gas quickly kills everyone remaining on your team"
         },
         "7": {
-          description: "door",
+          description: "The last survivor feels the darkness and loneliness close in as they alone continue their escape from THE SHADOW.\n" +
+          " \n" +
+          "All hope seemed to be lost...BUT THEN!\n" +
+          " \n" +
+          "A door with a golden doorknob appears and it seems to lead to the outside world!",
           preCheckFailure: ""
         }
       },
