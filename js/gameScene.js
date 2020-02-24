@@ -130,7 +130,8 @@ class SceneTracker {
       // magic Door
       "1": {
         scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["1"]["description"]
+            text: this.db["obstacles"]["1"]["description"],
+            sprite: this.app.sprites["magicdoor"]
           }, 
           this.db["obstacles"]["1"]["preCheckFailure"],
           false
@@ -211,8 +212,9 @@ class SceneTracker {
       },
       "6": {
         // gas
-        scene: new LevelScene(this.gameScene, undefined, {
-            text: this.db["obstacles"]["6"]["description"]
+        scene: new ToxicGasScene(this.gameScene, undefined, {
+            text: this.db["obstacles"]["6"]["description"],
+            sprite: this.app.sprites["toxicgas"]
           }, 
           this.db["obstacles"]["6"]["preCheckFailure"],
           true

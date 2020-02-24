@@ -123,6 +123,9 @@ class LevelCave extends GameObject {
     this.stage.width = 480
     this.stage.height = 160
     this.characters = characters
+
+    this.obstacle = obstacle
+
     if(background){
       background.x = 0
       background.y = 0
@@ -229,5 +232,13 @@ class LevelUI extends Scene {
         this.displayObstacle()
       }
     }
+  }
+}
+
+class ToxicGasScene extends LevelScene {
+  init(app, preCheck, postCheck){
+    super.init(app, preCheck, postCheck)
+    this.cave.obstacle.x = 0
+    this.cave.obstacle.alpha = 0.3
   }
 }
